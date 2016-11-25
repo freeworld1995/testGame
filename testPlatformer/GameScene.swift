@@ -14,11 +14,46 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let playerController = PlayerController.instance
     
     override func didMove(to view: SKView) {
+        addBackground()
+        addPhysics()
+        addGestureRecognizer(to: view)
+        
+        
+        let playerPosition = CGPoint(x: self.frame.midX, y: self.frame.midY)
+        playerController.config(position: playerPosition, parent: self, shootAction: nil, moveAction: nil)
+        
+        let enemyController = EnemyController()
+        enemyController.config(position: CGPoint(x: 700, y: 550), parent: self, shootAction: nil, moveAction: nil)
+
+        let changeColorController = ChangeColorController()
+        changeColorController.config(position: CGPoint(x: 300, y: 600), parent: self, shootAction: nil, moveAction: nil)
+        
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        guard let viewA = contact.bodyA.node as? View, let viewB = contact.bodyB.node as? View else { return }
+        
+        print(viewA.name!)
+        print(viewB.name!)
+        
+        viewA.handleContact?(viewB)
+        viewB.handleContact?(viewA)
+    }
+    
+    func addBackground() {
+        let background = SKSpriteNode(color: cBACKGROUND, size: self.frame.size)
+        background.zPosition = -1
+        background.anchorPoint = CGPoint.zero
+        addChild(background)
+    }
+    
+    func addPhysics() {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         self.physicsWorld.contactDelegate = self
-        
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
-        
+    }
+    
+    func addGestureRecognizer(to view: SKView) {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swipedRight))
         swipeRight.direction = .right
         view.addGestureRecognizer(swipeRight)
@@ -36,49 +71,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(swipedDown))
         swipeDown.direction = .down
         view.addGestureRecognizer(swipeDown)
-        
-        
-        let playerPosition = CGPoint(x: self.frame.midX, y: self.frame.midY)
-        playerController.config(position: playerPosition, parent: self, shootAction: nil, moveAction: nil, type: "blue")
-        
-        let enemyController = EnemyController()
-        enemyController.config(position: CGPoint(x: 700, y: 550), parent: self, shootAction: nil, moveAction: nil, type: "blue")
-        
-        
-    }
-    
-    func didBegin(_ contact: SKPhysicsContact) {
-        guard let viewA = contact.bodyA.node as? View, let viewB = contact.bodyB.node as? View else { return }
-        
-        print(viewA.name!)
-        print(viewB.name!)
-        
-        viewA.handleContact?(viewB)
-        viewB.handleContact?(viewA)
     }
     
     func swipedRight(sender:UISwipeGestureRecognizer){
-        print("swiped right")
+//        print("swiped right")
         playerController.view.physicsBody?.velocity = CGVector(dx: 500, dy: 0)
 //        playerController.view.physicsBody?.applyForce(CGVector(dx: 800, dy: 0))
     }
     
     func swipedLeft(sender:UISwipeGestureRecognizer){
-        print("swiped left")
+//        print("swiped left")
         playerController.view.physicsBody?.velocity = CGVector(dx: -500, dy: 0)
-//        playerController.view.physicsBody?.applyForce(CGVector(dx: -800, dy: 0))
     }
     
     func swipedUp(sender:UISwipeGestureRecognizer){
-        print("swiped up")
+//        print("swiped up")
         playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: 500)
-//        playerController.view.physicsBody?.applyForce(CGVector(dx: 0, dy: 800))
     }
     
     func swipedDown(sender:UISwipeGestureRecognizer){
-        print("swiped down")
+//        print("swiped down")
         playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: -500)
-//        playerController.view.physicsBody?.applyForce(CGVector(dx: 0, dy: -800))
     }
     
 }

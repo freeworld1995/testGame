@@ -15,6 +15,8 @@
 		BFB1F3591DE49C8600EEA0E1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F3581DE49C8600EEA0E1 /* Constants.swift */; };
 		BFB1F35B1DE49FA000EEA0E1 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F35A1DE49FA000EEA0E1 /* Color.swift */; };
 		BFB1F35D1DE4A5D200EEA0E1 /* EnemyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F35C1DE4A5D200EEA0E1 /* EnemyController.swift */; };
+		BFDF099F1DE80C90004226DB /* Shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDF099E1DE80C90004226DB /* Shape.swift */; };
+		BFDF09A11DE80E50004226DB /* ChangeColorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDF09A01DE80E50004226DB /* ChangeColorController.swift */; };
 		BFE6BB081DE3F74E00E362C5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6BB071DE3F74E00E362C5 /* AppDelegate.swift */; };
 		BFE6BB0C1DE3F74E00E362C5 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFE6BB0B1DE3F74E00E362C5 /* Actions.sks */; };
 		BFE6BB0E1DE3F74E00E362C5 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6BB0D1DE3F74E00E362C5 /* GameScene.swift */; };
@@ -33,6 +35,8 @@
 		BFB1F3581DE49C8600EEA0E1 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BFB1F35A1DE49FA000EEA0E1 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		BFB1F35C1DE4A5D200EEA0E1 /* EnemyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyController.swift; sourceTree = "<group>"; };
+		BFDF099E1DE80C90004226DB /* Shape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shape.swift; sourceTree = "<group>"; };
+		BFDF09A01DE80E50004226DB /* ChangeColorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeColorController.swift; sourceTree = "<group>"; };
 		BFE6BB041DE3F74E00E362C5 /* testPlatformer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testPlatformer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFE6BB071DE3F74E00E362C5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BFE6BB0B1DE3F74E00E362C5 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -90,6 +94,8 @@
 				BFB1F3581DE49C8600EEA0E1 /* Constants.swift */,
 				BFB1F35A1DE49FA000EEA0E1 /* Color.swift */,
 				BFB1F35C1DE4A5D200EEA0E1 /* EnemyController.swift */,
+				BFDF099E1DE80C90004226DB /* Shape.swift */,
+				BFDF09A01DE80E50004226DB /* ChangeColorController.swift */,
 			);
 			path = testPlatformer;
 			sourceTree = "<group>";
@@ -126,6 +132,7 @@
 				TargetAttributes = {
 					BFE6BB031DE3F74E00E362C5 = {
 						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = GDY7XCAX4D;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -174,9 +181,11 @@
 				BF1787131DE4071100BF12CE /* PlayerController.swift in Sources */,
 				BF1787111DE4059000BF12CE /* View.swift in Sources */,
 				BFB1F3591DE49C8600EEA0E1 /* Constants.swift in Sources */,
+				BFDF099F1DE80C90004226DB /* Shape.swift in Sources */,
 				BFB1F35B1DE49FA000EEA0E1 /* Color.swift in Sources */,
 				BFE6BB081DE3F74E00E362C5 /* AppDelegate.swift in Sources */,
 				BFB1F35D1DE4A5D200EEA0E1 /* EnemyController.swift in Sources */,
+				BFDF09A11DE80E50004226DB /* ChangeColorController.swift in Sources */,
 				BF17870F1DE4057B00BF12CE /* Controller.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -300,8 +309,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = GDY7XCAX4D;
 				INFOPLIST_FILE = testPlatformer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jimmy.testPlatformer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -313,8 +323,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = GDY7XCAX4D;
 				INFOPLIST_FILE = testPlatformer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jimmy.testPlatformer;
 				PRODUCT_NAME = "$(TARGET_NAME)";

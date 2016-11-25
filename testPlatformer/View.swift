@@ -12,7 +12,7 @@ typealias HandleContactType = (View) -> ()
 
 typealias HandleHeart = () -> ()
 
-class View: SKSpriteNode {
+class View: SKShapeNode {
     var handleContact: HandleContactType?
     var handleHeart: HandleHeart?
 }

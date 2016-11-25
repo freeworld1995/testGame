@@ -11,26 +11,22 @@ import SpriteKit
 class PlayerController: Controller {
     
     static let instance = PlayerController()
+    var border: SKShapeNode!
     
     private init() {
-        super.init(view: View(color: cBLUE, size: CGSize(width: 70, height: 70)))
+        super.init(view: View(rectOf: CGSize(width: 75, height: 75), cornerRadius: 8), color: cBLUE)
     }
     
-    override func config(position: CGPoint, parent: SKNode, shootAction: SKAction?, moveAction: SKAction?, type: String?) {
-        super.config(position: position, parent: parent, shootAction: shootAction, moveAction: moveAction, type: type)
+    override func config(position: CGPoint, parent: SKNode, shootAction: SKAction?, moveAction: SKAction?) {
+        super.config(position: position, parent: parent, shootAction: shootAction, moveAction: moveAction)
         self.parent = parent
         configPhysics()
         
-        let blue = UIColor.blue
-        
-        if view.color == blue {
-            print("fuck yeah")
-        }
-        
-        let border = SKSpriteNode(color: view.color, size: view.size)
+        border = SKShapeNode(rectOf: view.frame.size, cornerRadius: 8)
+        border.fillColor = view.fillColor
         border.alpha = 0.2
-        let enlargeAction = SKAction.scale(to: 1.28, duration: 1.5)
-        let shrinkAction = SKAction.scale(to: 1, duration: 1.5)
+        let enlargeAction = SKAction.scale(to: 1.18, duration: 1)
+        let shrinkAction = SKAction.scale(to: 1, duration: 1)
         let foreverBorderAction = SKAction.repeatForever(SKAction.sequence([enlargeAction, shrinkAction]))
         border.run(foreverBorderAction)
         view.addChild(border)
@@ -41,7 +37,7 @@ class PlayerController: Controller {
     }
     
     func configPhysics() {
-        view.physicsBody = SKPhysicsBody(rectangleOf: view.size)
+        view.physicsBody = SKPhysicsBody(rectangleOf: view.frame.size)
         view.physicsBody?.isDynamic = true
         view.physicsBody?.affectedByGravity = true
         view.physicsBody?.linearDamping = 0
@@ -53,8 +49,9 @@ class PlayerController: Controller {
         view.name = "player"
      
         view.handleContact = { [unowned self] otherView in
-            if otherView.color != self.view.color {
-                self.view.color = otherView.color
+            if otherView.fillColor != self.view.fillColor {
+                self.view.fillColor = otherView.fillColor
+                self.border.fillColor = otherView.fillColor
             }
         }
         

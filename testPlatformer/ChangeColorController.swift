@@ -1,23 +1,18 @@
 //
-//  EnemyController.swift
+//  ChangeColorController.swift
 //  testPlatformer
 //
-//  Created by Jimmy Hoang on 11/22/16.
+//  Created by Jimmy Hoang on 11/25/16.
 //  Copyright © 2016 Jimmy Hoang. All rights reserved.
 //
 
 import SpriteKit
 
-class EnemyController: Controller {
-    
+class ChangeColorController: Controller {
     init() {
-        super.init(view: View(rectOf: CGSize(width: 75, height: 75), cornerRadius: 0.3), color: cBLUE)
-        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(changeColor), userInfo: nil, repeats: false)
+        super.init(view: View(path: Shape.getTrianglePath()), color: cBLUE)
     }
     
-    @objc func changeColor() {  
-        view.fillColor = cGREEN
-    }
     
     override func config(position: CGPoint, parent: SKNode, shootAction: SKAction?, moveAction: SKAction?) {
         super.config(position: position, parent: parent, shootAction: shootAction, moveAction: moveAction)
@@ -36,7 +31,7 @@ class EnemyController: Controller {
         view.physicsBody?.collisionBitMask = 0
         view.zPosition = 1
         view.name = "enemy"
-  
+        
     }
 
 }

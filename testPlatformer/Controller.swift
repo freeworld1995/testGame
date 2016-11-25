@@ -13,17 +13,16 @@ class Controller {
     var parent: SKNode!
     var shootAction: SKAction?
     var moveAction: SKAction?
-    var type: String?
-    init(view: View) {
+    init(view: View, color: UIColor) {
         self.view = view
+        self.view.fillColor = color
     }
     
-    func config(position: CGPoint, parent: SKNode, shootAction: SKAction?, moveAction: SKAction?, type: String?) {
+    func config(position: CGPoint, parent: SKNode, shootAction: SKAction?, moveAction: SKAction?) {
         self.view.position = position
         self.parent = parent
         self.shootAction = shootAction
         self.moveAction = moveAction
-        self.type = type
         parent.addChild(self.view)
     }
     
@@ -34,13 +33,13 @@ class Controller {
     
     var width: CGFloat {
         get {
-            return self.view.size.width
+            return self.view.frame.size.width
         }
     }
     
     var height: CGFloat {
         get {
-            return self.view.size.height
+            return self.view.frame.size.height
         }
     }
     
