@@ -89,13 +89,13 @@
 				BF17870E1DE4057B00BF12CE /* Controller.swift */,
 				BF1787101DE4059000BF12CE /* View.swift */,
 				BF1787121DE4071100BF12CE /* PlayerController.swift */,
-				BF17871A1DE41BF200BF12CE /* FireParticles.sks */,
-				BF17871B1DE41BF200BF12CE /* spark.png */,
+				BFB1F35C1DE4A5D200EEA0E1 /* EnemyController.swift */,
+				BFDF09A01DE80E50004226DB /* ChangeColorController.swift */,
 				BFB1F3581DE49C8600EEA0E1 /* Constants.swift */,
 				BFB1F35A1DE49FA000EEA0E1 /* Color.swift */,
-				BFB1F35C1DE4A5D200EEA0E1 /* EnemyController.swift */,
 				BFDF099E1DE80C90004226DB /* Shape.swift */,
-				BFDF09A01DE80E50004226DB /* ChangeColorController.swift */,
+				BF17871A1DE41BF200BF12CE /* FireParticles.sks */,
+				BF17871B1DE41BF200BF12CE /* spark.png */,
 			);
 			path = testPlatformer;
 			sourceTree = "<group>";

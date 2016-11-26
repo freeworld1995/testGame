@@ -33,8 +33,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         guard let viewA = contact.bodyA.node as? View, let viewB = contact.bodyB.node as? View else { return }
         
-        print(viewA.name!)
-        print(viewB.name!)
+//        print(viewA.name!)
+//        print(viewB.name!)
         
         viewA.handleContact?(viewB)
         viewB.handleContact?(viewA)

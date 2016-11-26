@@ -10,7 +10,7 @@ import SpriteKit
 
 class ChangeColorController: Controller {
     init() {
-        super.init(view: View(path: Shape.getTrianglePath()), color: cBLUE)
+        super.init(view: View(path: Shape.getTrianglePath()), color: cRED)
     }
     
     
@@ -26,11 +26,17 @@ class ChangeColorController: Controller {
         view.physicsBody?.affectedByGravity = true
         view.physicsBody?.linearDamping = 0
         view.physicsBody?.angularDamping = 0
-        view.physicsBody?.categoryBitMask = ENEMY_MASK
+        view.physicsBody?.categoryBitMask = CHANGE_COLOR_MASK
         view.physicsBody?.contactTestBitMask = PLAYER_MASK
         view.physicsBody?.collisionBitMask = 0
         view.zPosition = 1
-        view.name = "enemy"
+        view.name = "ChangeColorObject"
+        
+        view.handleContact = { otherView in
+            if otherView.physicsBody?.categoryBitMask == PLAYER_MASK {
+                self.view.removeFromParent()
+            }
+        }
         
     }
 

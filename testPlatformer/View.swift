@@ -10,9 +10,9 @@ import SpriteKit
 
 typealias HandleContactType = (View) -> ()
 
-typealias HandleHeart = () -> ()
+typealias HandleChangeColor = () -> ()
 
 class View: SKShapeNode {
     var handleContact: HandleContactType?
-    var handleHeart: HandleHeart?
+    var handleChangeColor: HandleChangeColor?
 }

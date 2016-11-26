@@ -43,15 +43,18 @@ class PlayerController: Controller {
         view.physicsBody?.linearDamping = 0
         view.physicsBody?.angularDamping = 0
         view.physicsBody?.categoryBitMask = PLAYER_MASK
-        view.physicsBody?.contactTestBitMask = ENEMY_MASK
+        view.physicsBody?.contactTestBitMask = ENEMY_MASK | CHANGE_COLOR_MASK
         view.physicsBody?.collisionBitMask = 0
         view.zPosition = 2
         view.name = "player"
      
-        view.handleContact = { [unowned self] otherView in
-            if otherView.fillColor != self.view.fillColor {
-                self.view.fillColor = otherView.fillColor
+        view.handleContact = { otherView in
+            if otherView.physicsBody?.categoryBitMask == ENEMY_MASK && otherView.fillColor == self.view.fillColor {
+                otherView.removeFromParent()
+            }
+            if otherView.physicsBody?.categoryBitMask == CHANGE_COLOR_MASK {
                 self.border.fillColor = otherView.fillColor
+                self.view.fillColor = otherView.fillColor
             }
         }
         

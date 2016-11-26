@@ -11,8 +11,8 @@ import SpriteKit
 class EnemyController: Controller {
     
     init() {
-        super.init(view: View(rectOf: CGSize(width: 75, height: 75), cornerRadius: 0.3), color: cBLUE)
-        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(changeColor), userInfo: nil, repeats: false)
+        super.init(view: View(path: Shape.getStarPath()), color: cRED)
+//        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(changeColor), userInfo: nil, repeats: false)
     }
     
     @objc func changeColor() {  
@@ -26,7 +26,7 @@ class EnemyController: Controller {
     }
     
     func configPhysics() {
-        view.physicsBody = SKPhysicsBody(rectangleOf: view.frame.size)
+        view.physicsBody = SKPhysicsBody(edgeChainFrom: self.view.path!)
         view.physicsBody?.isDynamic = true
         view.physicsBody?.affectedByGravity = true
         view.physicsBody?.linearDamping = 0
