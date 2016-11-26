@@ -42,17 +42,17 @@ class PlayerController: Controller {
         view.physicsBody?.affectedByGravity = true
         view.physicsBody?.linearDamping = 0
         view.physicsBody?.angularDamping = 0
-        view.physicsBody?.categoryBitMask = PLAYER_MASK
-        view.physicsBody?.contactTestBitMask = ENEMY_MASK | CHANGE_COLOR_MASK
+        view.physicsBody?.categoryBitMask = BitMask.PLAYER
+        view.physicsBody?.contactTestBitMask = BitMask.ENEMY | BitMask.CHANGE_COLOR
         view.physicsBody?.collisionBitMask = 0
         view.zPosition = 2
         view.name = "player"
      
         view.handleContact = { otherView in
-            if otherView.physicsBody?.categoryBitMask == ENEMY_MASK && otherView.fillColor == self.view.fillColor {
+            if otherView.physicsBody?.categoryBitMask == BitMask.ENEMY && otherView.fillColor == self.view.fillColor {
                 otherView.removeFromParent()
             }
-            if otherView.physicsBody?.categoryBitMask == CHANGE_COLOR_MASK {
+            if otherView.physicsBody?.categoryBitMask == BitMask.CHANGE_COLOR {
                 self.border.fillColor = otherView.fillColor
                 self.view.fillColor = otherView.fillColor
             }

@@ -76,7 +76,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func swipedRight(sender:UISwipeGestureRecognizer){
 //        print("swiped right")
         playerController.view.physicsBody?.velocity = CGVector(dx: 500, dy: 0)
-//        playerController.view.physicsBody?.applyForce(CGVector(dx: 800, dy: 0))
     }
     
     func swipedLeft(sender:UISwipeGestureRecognizer){

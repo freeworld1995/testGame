@@ -26,14 +26,14 @@ class ChangeColorController: Controller {
         view.physicsBody?.affectedByGravity = true
         view.physicsBody?.linearDamping = 0
         view.physicsBody?.angularDamping = 0
-        view.physicsBody?.categoryBitMask = CHANGE_COLOR_MASK
-        view.physicsBody?.contactTestBitMask = PLAYER_MASK
+        view.physicsBody?.categoryBitMask = BitMask.CHANGE_COLOR
+        view.physicsBody?.contactTestBitMask = BitMask.PLAYER
         view.physicsBody?.collisionBitMask = 0
         view.zPosition = 1
         view.name = "ChangeColorObject"
         
         view.handleContact = { otherView in
-            if otherView.physicsBody?.categoryBitMask == PLAYER_MASK {
+            if otherView.physicsBody?.categoryBitMask == BitMask.PLAYER {
                 self.view.removeFromParent()
             }
         }
