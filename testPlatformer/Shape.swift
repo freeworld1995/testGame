@@ -11,11 +11,11 @@ import SpriteKit
 class Shape {
     static func getPolygonPath() -> CGPath {
         let polygonPath = UIBezierPath()
-        polygonPath.move(to: CGPoint(x: 35, y: 70))
-        polygonPath.addLine(to: CGPoint(x: 68.29, y: 45.82))
-        polygonPath.addLine(to: CGPoint(x: 55.57, y: 6.68))
-        polygonPath.addLine(to: CGPoint(x: 14.43, y: 6.68))
-        polygonPath.addLine(to: CGPoint(x: 1.71, y: 45.82))
+        polygonPath.move(to: CGPoint(x: 0, y: 37.5))
+        polygonPath.addLine(to: CGPoint(x: 35.66, y: 11.59))
+        polygonPath.addLine(to: CGPoint(x: 22.04, y: -30.34))
+        polygonPath.addLine(to: CGPoint(x: -22.04, y: -30.34))
+        polygonPath.addLine(to: CGPoint(x: -35.66, y: 11.59))
         polygonPath.close()
         
         return polygonPath.cgPath
@@ -23,38 +23,38 @@ class Shape {
     
     static func getTrianglePath() -> CGPath {
         let trianglePath = UIBezierPath()
-        trianglePath.move(to: CGPoint(x: 0, y: 0))
-        trianglePath.addCurve(to: CGPoint(x: 37.5, y: 74.95), controlPoint1: CGPoint(x: 39.82, y: 79.58), controlPoint2: CGPoint(x: 37.5, y: 74.95))
-        trianglePath.addLine(to: CGPoint(x: 75, y: 0))
-        trianglePath.addLine(to: CGPoint(x: 0, y: 0))
-        
+        trianglePath.move(to: CGPoint(x: -37.5, y: -31.5))
+        trianglePath.addCurve(to: CGPoint(x: 0, y: 43.5), controlPoint1: CGPoint(x: -0.58, y: 42.35), controlPoint2: CGPoint(x: 0, y: 43.5))
+        trianglePath.addLine(to: CGPoint(x: 37.5, y: -31.5))
+        trianglePath.addLine(to: CGPoint(x: -37.5, y: -31.5))
         return trianglePath.cgPath
     }
-    
+
     static func getStarPath() -> CGPath {
         let starPath = UIBezierPath()
-        starPath.move(to: CGPoint(x: 35, y: 70))
-        starPath.addLine(to: CGPoint(x: 47.34, y: 51.99))
-        starPath.addLine(to: CGPoint(x: 68.29, y: 45.82))
-        starPath.addLine(to: CGPoint(x: 54.97, y: 28.51))
-        starPath.addLine(to: CGPoint(x: 55.57, y: 6.68))
-        starPath.addLine(to: CGPoint(x: 35, y: 14))
-        starPath.addLine(to: CGPoint(x: 14.43, y: 6.68))
-        starPath.addLine(to: CGPoint(x: 15.03, y: 28.51))
-        starPath.addLine(to: CGPoint(x: 1.71, y: 45.82))
-        starPath.addLine(to: CGPoint(x: 22.66, y: 51.99))
+        starPath.move(to: CGPoint(x: 0, y: 37.5))
+        starPath.addLine(to: CGPoint(x: 13.23, y: 18.2))
+        starPath.addLine(to: CGPoint(x: 35.66, y: 11.59))
+        starPath.addLine(to: CGPoint(x: 21.4, y: -6.95))
+        starPath.addLine(to: CGPoint(x: 22.04, y: -30.34))
+        starPath.addLine(to: CGPoint(x: 0, y: -22.5))
+        starPath.addLine(to: CGPoint(x: -22.04, y: -30.34))
+        starPath.addLine(to: CGPoint(x: -21.4, y: -6.95))
+        starPath.addLine(to: CGPoint(x: -35.66, y: 11.59))
+        starPath.addLine(to: CGPoint(x: -13.23, y: 18.2))
         starPath.close()
+        
         
         return starPath.cgPath
     }
     
     static func getOvalPath() -> CGPath {
-        let ovalPath = UIBezierPath(ovalIn: CGRect(x: 87, y: 34, width: 70, height: 70))
+        let ovalPath = UIBezierPath(ovalIn: CGRect(x: -38, y: -38, width: 75, height: 75))
         return ovalPath.cgPath
     }
     
     static func getRectanglePath() -> CGPath {
-        let rectanglePath = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: 70, height: 70), cornerRadius: 8)
+        let rectanglePath = UIBezierPath(roundedRect: CGRect(x: -38, y: -38, width: 75, height: 75), cornerRadius: 8)
         return rectanglePath.cgPath
     }
 }

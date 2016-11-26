@@ -13,5 +13,6 @@ struct BitMask {
     static let ENEMY = UInt32(1 << 2)
     static let CHANGE_COLOR = UInt32(1 << 3)
     static let WALL = UInt32(1 << 4)
+    static let WALL_FOR_PLAYER = UInt32(1 << 5)
 }
 

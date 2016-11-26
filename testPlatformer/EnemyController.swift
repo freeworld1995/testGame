@@ -26,7 +26,7 @@ class EnemyController: Controller {
     }
     
     func configPhysics() {
-        view.physicsBody = SKPhysicsBody(edgeChainFrom: self.view.path!)
+        view.physicsBody = SKPhysicsBody(polygonFrom: view.path!)
         view.physicsBody?.isDynamic = true
         view.physicsBody?.affectedByGravity = true
         view.physicsBody?.linearDamping = 0

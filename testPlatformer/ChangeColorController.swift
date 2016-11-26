@@ -21,7 +21,7 @@ class ChangeColorController: Controller {
     }
     
     func configPhysics() {
-        view.physicsBody = SKPhysicsBody(rectangleOf: view.frame.size)
+        view.physicsBody = SKPhysicsBody(polygonFrom: view.path!)
         view.physicsBody?.isDynamic = true
         view.physicsBody?.affectedByGravity = true
         view.physicsBody?.linearDamping = 0
@@ -36,6 +36,7 @@ class ChangeColorController: Controller {
             if otherView.physicsBody?.categoryBitMask == BitMask.PLAYER {
                 self.view.removeFromParent()
             }
+
         }
         
     }
