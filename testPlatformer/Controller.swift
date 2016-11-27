@@ -17,6 +17,7 @@ class Controller {
         self.view = view
         self.view.fillColor = color
     }
+
     
     func config(position: CGPoint, parent: SKNode, shootAction: SKAction?, moveAction: SKAction?) {
         self.view.position = position
@@ -26,7 +27,7 @@ class Controller {
         parent.addChild(self.view)
     }
     
-    func configExplosion(position: CGPoint, parent: SKNode, explodeAction: SKAction?) {
+    func configExplosion(parent: SKNode) {
         self.parent = parent
         parent.addChild(self.view)
     }

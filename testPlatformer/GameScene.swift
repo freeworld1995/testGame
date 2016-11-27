@@ -12,7 +12,14 @@ import GameplayKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let playerController = PlayerController.instance
-    var cameraNode: SKCameraNode!
+    static var cameraNode: SKCameraNode!
+    
+//    var arrayColor: [UIColor] = [cRED, cGREEN, cBLUE]
+//    
+//    func randColor() {
+//        arrayColor = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: arrayColor) as! [UIColor]
+//        print(arrayColor[0])
+//    }
     
     override func didMove(to view: SKView) {
         addBackground()
@@ -20,7 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addGestureRecognizer(to: view)
         addWall()
         // if addCarera() -> please uncomment update() also !!
-//        addCamera()
+        addCamera()
         
         let playerPosition = CGPoint(x: self.frame.midX, y: self.frame.midY)
         playerController.config(position: playerPosition, parent: self, shootAction: nil, moveAction: nil)
@@ -30,6 +37,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         let changeColorController = ChangeColorController()
         changeColorController.config(position: CGPoint(x: 300, y: 600), parent: self, shootAction: nil, moveAction: nil)
+        
+//        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(randColor), userInfo: nil, repeats: true)
     }
 
 //    override func update(_ currentTime: TimeInterval) {
@@ -56,10 +65,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func addCamera() {
-        cameraNode = SKCameraNode()
-        addChild(cameraNode)
-        camera = cameraNode
-        cameraNode.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
+        GameScene.cameraNode = SKCameraNode()
+        addChild(GameScene.cameraNode)
+        camera = GameScene.cameraNode
+        GameScene.cameraNode.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
     }
     
     func addWall() {
@@ -84,7 +93,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         background.zPosition = -1
         background.handleContact = { otherView in
             if otherView.physicsBody?.categoryBitMask == BitMask.PLAYER {
-                print("Touch PLAYER !!!")
+//                print("Touch PLAYER !!!")
+                GameScene.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.size.width / 2, y: self.size.height / 2), duration: 0.5, amplitudeX: 11, amplitudeY: 5))
+                
+                ExplosionController.makeShatter(parent: self)
+//                self.physicsWorld.speed = 0.3
             }
         }
         addChild(background)

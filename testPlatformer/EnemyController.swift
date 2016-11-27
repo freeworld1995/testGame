@@ -7,12 +7,21 @@
 //
 
 import SpriteKit
+import GameplayKit
 
 class EnemyController: Controller {
     
     init() {
         super.init(view: View(path: Shape.getStarPath()), color: cRED)
-//        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(changeColor), userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(randColor), userInfo: nil, repeats: true)
+    }
+    
+    var arrayColor: [UIColor] = [cRED, cGREEN, cBLUE]
+    
+    @objc func randColor() {
+        arrayColor = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: arrayColor) as! [UIColor]
+        
+        view.fillColor = arrayColor[0]
     }
     
     @objc func changeColor() {  
