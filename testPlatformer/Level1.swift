@@ -11,7 +11,7 @@ import GameplayKit
 
 class Level1: SKScene, SKPhysicsContactDelegate {
     
-    let playerController = PlayerController.instance
+    let playerController = PlayerController()
     static var cameraNode: SKCameraNode!
     //    var arrayColor: [UIColor] = [cRED, cGREEN, cBLUE]
     //
@@ -27,7 +27,7 @@ class Level1: SKScene, SKPhysicsContactDelegate {
     
     override init(size: CGSize) {
         super.init(size: size)
-        
+        PlayerController.instance = playerController
         //        spawnEnemy()
     }
     
@@ -40,14 +40,14 @@ class Level1: SKScene, SKPhysicsContactDelegate {
     }
     
     override func didMove(to view: SKView) {
-        self.removeAllChildren()
-        
-        if let recognizers = view.gestureRecognizers {
-            for recognizer in recognizers {
-                view.removeGestureRecognizer(recognizer)
-                
-            }
-        }
+//        self.removeAllChildren()
+//        
+//        if let recognizers = view.gestureRecognizers {
+//            for recognizer in recognizers {
+//                view.removeGestureRecognizer(recognizer)
+//                
+//            }
+//        }
         addBackground()
         addPhysics()
         addGestureRecognizer(to: view)
@@ -226,7 +226,7 @@ class Level1: SKScene, SKPhysicsContactDelegate {
         background.zPosition = -1
         background.handleContact = { [unowned self] otherView in
             if otherView.physicsBody?.categoryBitMask == BitMask.PLAYER {
-                background.contacted = true
+//                background.contacted = true
                 Level1.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.size.width / 2, y: self.size.height / 2), duration: 0.5, amplitudeX: 11, amplitudeY: 5))
                 
                 ExplosionController.makeShatter(parent: self, color: UIColor(red:0.56, green:0.55, blue:0.63, alpha:1.0))

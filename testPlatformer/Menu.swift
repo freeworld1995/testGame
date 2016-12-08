@@ -11,9 +11,11 @@ import SpriteKit
 
 class Menu: SKScene, SKPhysicsContactDelegate {
     
-    let player = PlayerController.instance
+    let player = PlayerController()
     static var cameraNode: SKCameraNode!
+    
     override func didMove(to view: SKView) {
+        PlayerController.instance = player
         addBackground()
         addPhysics()
         addCamera()

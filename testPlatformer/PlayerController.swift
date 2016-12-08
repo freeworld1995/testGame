@@ -10,11 +10,10 @@ import SpriteKit
 
 class PlayerController: Controller {
     
-    static let instance = PlayerController()
-
+    static var instance: PlayerController!
     weak var border: SKShapeNode!
     
-    private init() {
+     init() {
         super.init(view: View(path: Shape.getRectanglePath()), color: cBLUE)
         border = SKShapeNode(path: view.path!)
         border.fillColor = view.fillColor
