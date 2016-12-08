@@ -15,4 +15,9 @@ typealias HandleChangeColor = () -> ()
 class View: SKShapeNode {
     var handleContact: HandleContactType?
     var handleChangeColor: HandleChangeColor?
+    var contacted = false
+    
+    deinit {
+        print("View deinited")
+    }
 }

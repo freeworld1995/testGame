@@ -9,10 +9,10 @@
 import SpriteKit
 
 class ExplosionController {
-    static func makeShatter(parent: SKNode) {
+    static func makeShatter(parent: SKNode, color: UIColor) {
         if let shatter = SKEmitterNode(fileNamed: "shatter") {
             shatter.position = PlayerController.instance.position
-            
+            shatter.particleColor = color
             let addShatterAction = SKAction.run {
                 parent.addChild(shatter)
             }

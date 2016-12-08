@@ -10,12 +10,16 @@ import SpriteKit
 
 class Controller {
     let view: View
-    var parent: SKNode!
+    weak var parent: SKNode!
     var shootAction: SKAction?
     var moveAction: SKAction?
     init(view: View, color: UIColor) {
         self.view = view
         self.view.fillColor = color
+    }
+    
+    deinit {
+        print("Controller deinited")
     }
 
     

@@ -7,17 +7,30 @@
 //
 
 import SpriteKit
+import GameplayKit
 
 class ChangeColorController: Controller {
+    
+    var arrayColor: [UIColor] = [cRED, cGREEN, cBLUE]
+    
     init() {
         super.init(view: View(path: Shape.getTrianglePath()), color: cRED)
     }
     
+    deinit {
+        print("ChangeColor deinited")
+    }
     
     override func config(position: CGPoint, parent: SKNode, shootAction: SKAction?, moveAction: SKAction?) {
         super.config(position: position, parent: parent, shootAction: shootAction, moveAction: moveAction)
         self.parent = parent
         configPhysics()
+    }
+    
+    func randColor() {
+        arrayColor = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: arrayColor) as! [UIColor]
+        
+        view.fillColor = arrayColor[0]
     }
     
     func configPhysics() {
@@ -32,13 +45,11 @@ class ChangeColorController: Controller {
         view.zPosition = 1
         view.name = "ChangeColorObject"
         
-        view.handleContact = { otherView in
-            if otherView.physicsBody?.categoryBitMask == BitMask.PLAYER {
-                self.view.removeFromParent()
-            }
-
-        }
-        
+//        view.handleContact = { [unowned self] otherView in
+//            if otherView.physicsBody?.categoryBitMask == BitMask.PLAYER {
+//                self.view.removeFromParent()
+//            }
+//        }
     }
-
+    
 }
