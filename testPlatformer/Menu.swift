@@ -68,7 +68,7 @@ class Menu: Scene, SKPhysicsContactDelegate {
         background.zPosition = -1
         background.handleContact = { [unowned self] otherView in
             if otherView.physicsBody?.categoryBitMask == BitMask.PLAYER {
-                otherView.removeFromParent()
+
 //                Menu.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.size.width / 2, y: self.size.height / 2), duration: 0.4, amplitudeX: 14, amplitudeY: 9))
                 
                 ExplosionController.makeShatter(position: self.player.position, parent: self)

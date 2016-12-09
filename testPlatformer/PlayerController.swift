@@ -78,19 +78,17 @@ class PlayerController: Controller {
                 self.view.contacted = true
                 otherView.removeFromParent()
                 self.didDestroyEnemy?()
-                
-//                Level1.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.parent.frame.size.width / 2, y: self.parent.frame.size.height / 2), duration: 0.5, amplitudeX: 11, amplitudeY: 5))
-//                ExplosionController.makeShatter(position: self.position, parent: self.parent)
+                self.parent.makeCameraShake!()
+                ExplosionController.makeShatter(position: self.position, parent: self.parent)
             }
             
             if otherView.physicsBody?.categoryBitMask == BitMask.WALL_FOR_PLAYER {
                 self.parent.makeCameraShake!()
-                self.destroy()
             }
             
             if otherView.physicsBody?.categoryBitMask == BitMask.CHANGE_COLOR {
                 otherView.removeFromParent()
-//                self.border.fillColor = otherView.fillColor
+                self.border.fillColor = otherView.fillColor
                 self.view.fillColor = otherView.fillColor
             }
         }

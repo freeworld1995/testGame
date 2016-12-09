@@ -24,6 +24,7 @@
 		BFB1F35B1DE49FA000EEA0E1 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F35A1DE49FA000EEA0E1 /* Color.swift */; };
 		BFB1F35D1DE4A5D200EEA0E1 /* EnemyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F35C1DE4A5D200EEA0E1 /* EnemyController.swift */; };
 		BFD857C31DFADD2900C88B02 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD857C21DFADD2900C88B02 /* Scene.swift */; };
+		BFDCE8AA1DFB01CB00931672 /* Level1.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFDCE8A91DFB01CB00931672 /* Level1.sks */; };
 		BFDF099F1DE80C90004226DB /* Shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDF099E1DE80C90004226DB /* Shape.swift */; };
 		BFDF09A11DE80E50004226DB /* ChangeColorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDF09A01DE80E50004226DB /* ChangeColorController.swift */; };
 		BFDF1FD81DF9A46F004BC259 /* Level1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDF1FD71DF9A46F004BC259 /* Level1.swift */; };
@@ -55,6 +56,7 @@
 		BFB1F35A1DE49FA000EEA0E1 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		BFB1F35C1DE4A5D200EEA0E1 /* EnemyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyController.swift; sourceTree = "<group>"; };
 		BFD857C21DFADD2900C88B02 /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
+		BFDCE8A91DFB01CB00931672 /* Level1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level1.sks; sourceTree = "<group>"; };
 		BFDF099E1DE80C90004226DB /* Shape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shape.swift; sourceTree = "<group>"; };
 		BFDF09A01DE80E50004226DB /* ChangeColorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeColorController.swift; sourceTree = "<group>"; };
 		BFDF1FD71DF9A46F004BC259 /* Level1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level1.swift; sourceTree = "<group>"; };
@@ -81,6 +83,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BFDCE8AB1DFB01E000931672 /* Level */ = {
+			isa = PBXGroup;
+			children = (
+				BFDF1FD71DF9A46F004BC259 /* Level1.swift */,
+				BFDCE8A91DFB01CB00931672 /* Level1.sks */,
+				BFE6BB0D1DE3F74E00E362C5 /* Level2.swift */,
+				BFDF1FD91DF9A4C1004BC259 /* Menu.swift */,
+			);
+			name = Level;
+			sourceTree = "<group>";
+		};
 		BFE6BAFB1DE3F74E00E362C5 = {
 			isa = PBXGroup;
 			children = (
@@ -100,11 +113,9 @@
 		BFE6BB061DE3F74E00E362C5 /* testPlatformer */ = {
 			isa = PBXGroup;
 			children = (
+				BFDCE8AB1DFB01E000931672 /* Level */,
 				BFE6BB071DE3F74E00E362C5 /* AppDelegate.swift */,
 				BFE6BB0B1DE3F74E00E362C5 /* Actions.sks */,
-				BFDF1FD71DF9A46F004BC259 /* Level1.swift */,
-				BFE6BB0D1DE3F74E00E362C5 /* Level2.swift */,
-				BFDF1FD91DF9A4C1004BC259 /* Menu.swift */,
 				BFD857C21DFADD2900C88B02 /* Scene.swift */,
 				69112EA41DEB26280081246A /* GameOverScene.swift */,
 				BFE6BB0F1DE3F74E00E362C5 /* GameViewController.swift */,
@@ -202,6 +213,7 @@
 				BFE6BB181DE3F74E00E362C5 /* LaunchScreen.storyboard in Resources */,
 				BFE6BB0C1DE3F74E00E362C5 /* Actions.sks in Resources */,
 				69112EA51DEB26280081246A /* GameOverScene.sks in Resources */,
+				BFDCE8AA1DFB01CB00931672 /* Level1.sks in Resources */,
 				BF2A985B1DE9FB0C00BC60B2 /* Triangle@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

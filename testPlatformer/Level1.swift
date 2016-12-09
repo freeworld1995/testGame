@@ -13,13 +13,6 @@ class Level1: Scene, SKPhysicsContactDelegate {
     
     let playerController = PlayerController()
     var cameraNode: SKCameraNode!
-    //    var arrayColor: [UIColor] = [cRED, cGREEN, cBLUE]
-    //
-    //    func randColor() {
-    //        arrayColor = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: arrayColor) as! [UIColor]
-    //        print(arrayColor[0])
-    //    }
-    
     var arrayEnemyPosition: [CGPoint] = []
     var maxSpawningTurn: Int = 0
     var maxEnemyInScene: Int = 3
@@ -35,11 +28,11 @@ class Level1: Scene, SKPhysicsContactDelegate {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
     
-    
     override func didMove(to view: SKView) {
+        
         makeCameraShake = { [unowned self] in
             self.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.size.width / 2, y: self.size.height / 2), duration: 0.4, amplitudeX: 14, amplitudeY: 9))
         }
@@ -49,13 +42,14 @@ class Level1: Scene, SKPhysicsContactDelegate {
         addGestureRecognizer(to: view)
         addWall()
         addCamera()
-//        arrayAddChangeColor.append(addChangeColorTop)
-//        arrayAddChangeColor.append(addChangeColorLeft)
-//        arrayAddChangeColor.append(addChangeColorRight)
+        arrayAddChangeColor.append(addChangeColorTop)
+        arrayAddChangeColor.append(addChangeColorLeft)
+        arrayAddChangeColor.append(addChangeColorRight)
         configPlayer()
-//        spawnEnemy()
-//        
-//        addChangeColorTimer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(addChangeColor), userInfo: nil, repeats: true)
+        spawnEnemy()
+
+        addChangeColorTimer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(addChangeColor), userInfo: nil, repeats: true)
+        
         //        let pauseMenu = SKSpriteNode(color: UIColor.black, size: self.frame.size)
         //        pauseMenu.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
         //        pauseMenu.alpha = 0.4
@@ -218,7 +212,7 @@ class Level1: Scene, SKPhysicsContactDelegate {
     }
     
     func replay() {
-//        self.addChangeColorTimer.invalidate()
+        self.addChangeColorTimer.invalidate()
         // Access UserDefaults
         let defaults = UserDefaults.standard
         
@@ -226,9 +220,10 @@ class Level1: Scene, SKPhysicsContactDelegate {
         let currentLevel = defaults.integer(forKey: "currentlevel")
         print(currentLevel)
         // load scene with the "currentLevel"
-        let newGameScene = Level1(size: self.frame.size)
-        newGameScene.scaleMode = .aspectFill
-        
+        let newGameScene = SKScene(fileNamed: "Level\(currentLevel)")
+        newGameScene?.size = self.frame.size
+        newGameScene?.scaleMode = .aspectFill
+
         self.view!.presentScene(newGameScene)
         
     }
