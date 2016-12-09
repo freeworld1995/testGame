@@ -9,16 +9,21 @@
 import UIKit
 import SpriteKit
 
-class Menu: SKScene, SKPhysicsContactDelegate {
+class Menu: Scene, SKPhysicsContactDelegate {
     
-    let player = PlayerController()
-    static var cameraNode: SKCameraNode!
-    
+    var player: PlayerController!
+    var cameraNode: SKCameraNode!
+
     override func didMove(to view: SKView) {
-        PlayerController.instance = player
+        self.player = PlayerController()
         addBackground()
         addPhysics()
         addCamera()
+        
+        makeCameraShake = { [unowned self] in
+            self.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.size.width / 2, y: self.size.height / 2), duration: 0.4, amplitudeX: 14, amplitudeY: 9))
+        }
+        
         
 //        let bezier = UIBezierPath(roundedRect: CGRect(x: 125, y: 249, width: 808, height: 276), cornerRadius: 21)
         let bezier = UIBezierPath(roundedRect: CGRect(x: 24, y: 246, width: 982, height: 276), cornerRadius: 21)
@@ -46,10 +51,10 @@ class Menu: SKScene, SKPhysicsContactDelegate {
     }
     
     func addCamera() {
-        Menu.cameraNode = SKCameraNode()
-        addChild(Menu.cameraNode)
-        camera = Menu.cameraNode
-        Menu.cameraNode.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
+        cameraNode = SKCameraNode()
+        addChild(cameraNode)
+        camera = cameraNode
+        cameraNode.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
     }
     
     func addBackground() {
@@ -63,18 +68,13 @@ class Menu: SKScene, SKPhysicsContactDelegate {
         background.zPosition = -1
         background.handleContact = { [unowned self] otherView in
             if otherView.physicsBody?.categoryBitMask == BitMask.PLAYER {
-                Menu.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.size.width / 2, y: self.size.height / 2), duration: 0.4, amplitudeX: 14, amplitudeY: 9))
+                otherView.removeFromParent()
+//                Menu.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.size.width / 2, y: self.size.height / 2), duration: 0.4, amplitudeX: 14, amplitudeY: 9))
                 
-                ExplosionController.makeShatter(parent: self, color: UIColor(red:0.56, green:0.55, blue:0.63, alpha:1.0))
+                ExplosionController.makeShatter(position: self.player.position, parent: self)
             }
         }
         addChild(background)
-        
-        let dust = SKEmitterNode(fileNamed: "dust")
-        let dustEmitterAction = SKAction.run {
-            self.addChild(dust!)
-        }
-        run(dustEmitterAction)
      
         let logo = SKSpriteNode(imageNamed: "blocky")
         logo.position = CGPoint(x: self.size.width / 2, y: self.size.height * 0.8)
@@ -107,6 +107,7 @@ class Menu: SKScene, SKPhysicsContactDelegate {
                 return
         }
         
+        // if contacted turn ON -> object cannot contact anymore for a while
         if viewA.contacted || viewB.contacted {
             return
         }
@@ -120,21 +121,33 @@ class Menu: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    // Click "Start" -> save level number to 1 (Level1)
+    func saveCurrentLevel() {
+        let defaults = UserDefaults.standard
+        defaults.set(1, forKey: "currentlevel")
+    }
+    
+    func moveToLevel1() {
+        let sceneToMoveTo = Level1(size: self.frame.size)
+        sceneToMoveTo.scaleMode = self.scaleMode
+        let sceneTransition = SKTransition.doorsOpenVertical(withDuration: 0.4)
+        self.view?.presentScene(sceneToMoveTo, transition: sceneTransition)
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch: AnyObject in touches {
             let touchePos = touch.location(in: self)
             let tappedNode = atPoint(touchePos)
             let nameOfTappedNode = tappedNode.name
-            
+
+            // check if we click on something that don't have a 'NAME'
             guard nameOfTappedNode != nil else {return}
             
             switch nameOfTappedNode! {
             case "start":
+                saveCurrentLevel()
                 self.removeAllChildren()
-                let sceneToMoveTo = Level1(size: self.frame.size)
-                sceneToMoveTo.scaleMode = self.scaleMode
-                let sceneTransition = SKTransition.doorsOpenVertical(withDuration: 0.4)
-                self.view?.presentScene(sceneToMoveTo, transition: sceneTransition)
+                moveToLevel1()
             case "option":
                 print("Option scene")
             case "info":

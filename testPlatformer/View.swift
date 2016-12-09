@@ -12,10 +12,13 @@ typealias HandleContactType = (View) -> ()
 
 typealias HandleChangeColor = () -> ()
 
+typealias DestroyType = () -> ()
+
 class View: SKShapeNode {
     var handleContact: HandleContactType?
     var handleChangeColor: HandleChangeColor?
     var contacted = false
+    var destroy: DestroyType?
     
     deinit {
         print("View deinited")

@@ -10,7 +10,7 @@ import SpriteKit
 
 class Controller {
     let view: View
-    weak var parent: SKNode!
+    weak var parent: Scene!
     var shootAction: SKAction?
     var moveAction: SKAction?
     init(view: View, color: UIColor) {
@@ -23,7 +23,7 @@ class Controller {
     }
 
     
-    func config(position: CGPoint, parent: SKNode, shootAction: SKAction?, moveAction: SKAction?) {
+    func config(position: CGPoint, parent: Scene, shootAction: SKAction?, moveAction: SKAction?) {
         self.view.position = position
         self.parent = parent
         self.shootAction = shootAction
@@ -31,7 +31,7 @@ class Controller {
         parent.addChild(self.view)
     }
     
-    func configExplosion(parent: SKNode) {
+    func configExplosion(parent: Scene) {
         self.parent = parent
         parent.addChild(self.view)
     }

@@ -10,18 +10,18 @@ import SpriteKit
 import GameplayKit
 import UIKit
 
-class GameScene: SKScene, SKPhysicsContactDelegate{
+class Level2: Scene, SKPhysicsContactDelegate{
    static var spawnTriangle : Timer!
     
     
-    let playerController = PlayerController.instance
-    static var cameraNode: SKCameraNode!
+    let playerController = PlayerController()
+    var cameraNode: SKCameraNode!
    // var hudNode : SKNode!
     let tapToStartNode = SKSpriteNode(imageNamed: "TapToStart")
 //    var player : SKNode!
     var changeColor : SKNode!
 //    var foreGround : SKNode!
-    static let scene = GameScene()
+    static let scene = Level2()
     
 //    var arrayColor: [UIColor] = [cRED, cGREEN, cBLUE]
 //    
@@ -51,12 +51,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
 //    }
     
     override func didMove(to view: SKView) {
-        
+        makeCameraShake = { [unowned self] in
+            self.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.size.width / 2, y: self.size.height / 2), duration: 0.4, amplitudeX: 14, amplitudeY: 9))
+        }
         addBackground()
         addPhysics()
         addGestureRecognizer(to: view)
         addWall()
-        // if addCarera() -> please uncomment update() also !!
         addCamera()
         addChangColorController()
         addPlayer()
@@ -79,7 +80,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         
         
-        GameScene.spawnTriangle = Timer.scheduledTimer(timeInterval: 15, target: self, selector: #selector(addChangColorController), userInfo: nil, repeats: true)
+        Level2.spawnTriangle = Timer.scheduledTimer(timeInterval: 15, target: self, selector: #selector(addChangColorController), userInfo: nil, repeats: true)
 //
 //        Timer.scheduledTimer(timeInterval: 15, target: self, selector: #selector(activateAutoChangeColor), userInfo: nil, repeats: true)
         
@@ -102,20 +103,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     
    func addChangColorController()  {
-        let changeColorController = ChangeColorController()
-   // changeColorController.view.physicsBody?.isDynamic = true
-    let array = ["BLUE","GREEN","RED"]
-        changeColorController.view.fillColor = UIColor.fromString(name: array.random3Colors())
-        let changeColorControllerPosition = CGPoint(x: random(min: self.size.width * 0.1, max: self.size.width * 0.9) , y: self.size.height)
-        let path = UIBezierPath.setPath(positionX: changeColorControllerPosition.x, positionY: changeColorControllerPosition.y, view: self.view!)
-       
-        let random1 = random_Int(min: 0, max: path.count - 1 )
-        let trianglePath = SKAction.follow(path[random1].cgPath, duration: 10)
-        changeColorController.view.run(SKAction.sequence([trianglePath, SKAction.removeFromParent()]))
-    
-
-        changeColorController.config(position: changeColorControllerPosition , parent: self, shootAction: nil, moveAction: trianglePath)
-    
+//        let changeColorController = ChangeColorController()
+//   // changeColorController.view.physicsBody?.isDynamic = true
+//    let array = ["BLUE","GREEN","RED"]
+//        changeColorController.view.fillColor = UIColor.fromString(name: array.random3Colors())
+//        let changeColorControllerPosition = CGPoint(x: random(min: self.size.width * 0.1, max: self.size.width * 0.9) , y: self.size.height)
+//        let path = UIBezierPath.setPath(positionX: changeColorControllerPosition.x, positionY: changeColorControllerPosition.y, view: self.view!)
+//       
+//        let random1 = random_Int(min: 0, max: path.count - 1 )
+//        let trianglePath = SKAction.follow(path[random1].cgPath, duration: 10)
+//        changeColorController.view.run(SKAction.sequence([trianglePath, SKAction.removeFromParent()]))
+//    
+//
+//        changeColorController.config(position: changeColorControllerPosition , parent: self, shootAction: nil, moveAction: trianglePath)
+//    
   
         
     }
@@ -140,10 +141,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     func addCamera() {
-        GameScene.cameraNode = SKCameraNode()
-        addChild(GameScene.cameraNode)
-        camera = GameScene.cameraNode
-        GameScene.cameraNode.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
+        cameraNode = SKCameraNode()
+        addChild(cameraNode)
+        camera = cameraNode
+        cameraNode.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
     }
     
     func addWall() {
@@ -156,7 +157,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         wall.handleContact = { otherView in
             otherView.removeFromParent()
             
-            let sceneToMoveTo = GameScene(size: self.size)
+            let sceneToMoveTo = Level2(size: self.size)
             sceneToMoveTo.scaleMode = self.scaleMode
             let sceneTransition = SKTransition.doorsOpenVertical(withDuration: 0.4)
             self.view!.presentScene(sceneToMoveTo, transition: sceneTransition)
@@ -182,9 +183,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 pauseMenu.run(SKAction.fadeAlpha(to: 0.4, duration: 4))
                 pauseMenu.zPosition = 5
                 self.addChild(pauseMenu)
-                GameScene.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.size.width / 2, y: self.size.height / 2), duration: 0.5, amplitudeX: 11, amplitudeY: 5))
-                
-                ExplosionController.makeShatter(parent: self)
+//                ExplosionController.makeShatter(position: self.playerController.position, parent: self)
 //                self.physicsWorld.speed = 0.3
             }
         }

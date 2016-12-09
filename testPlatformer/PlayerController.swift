@@ -8,13 +8,17 @@
 
 import SpriteKit
 
+typealias DidDestroyEnemyType = () -> ()
+
 class PlayerController: Controller {
     
-    static var instance: PlayerController!
-    weak var border: SKShapeNode!
+    var border: SKShapeNode!
+    var didDestroyEnemy: DidDestroyEnemyType?
     
-     init() {
+    init() {
         super.init(view: View(path: Shape.getRectanglePath()), color: cBLUE)
+        
+        // Add border effect for player
         border = SKShapeNode(path: view.path!)
         border.fillColor = view.fillColor
         border.alpha = 0.2
@@ -23,30 +27,34 @@ class PlayerController: Controller {
         let foreverBorderAction = SKAction.repeatForever(SKAction.sequence([enlargeAction, shrinkAction]))
         border.run(foreverBorderAction)
         view.addChild(border)
-
+        
     }
     
     deinit {
         print("playerController deinited")
     }
     
-    override func config(position: CGPoint, parent: SKNode, shootAction: SKAction?, moveAction: SKAction?) {
+    override func config(position: CGPoint, parent: Scene, shootAction: SKAction?, moveAction: SKAction?) {
         super.config(position: position, parent: parent, shootAction: shootAction, moveAction: moveAction)
-        self.parent = parent
+//        self.parent = parent
         configPhysics()
         
+        // Check if moveAction nil -> don't run configMove
         if moveAction != nil {
             configMove(action: moveAction!)
         }
         
-        
-        //        let emitter = SKEmitterNode(fileNamed: "FireParticles")
-        //        emitter?.zPosition = 1
-        //        view.addChild(emitter!)
+//        self.view.destroy = destroy
     }
     
     func configMove(action: SKAction) {
-                view.run(.repeatForever(action))
+        view.run(.repeatForever(action))
+    }
+    
+    func destroy() -> Void {
+        self.view.removeAllChildren()
+        self.view.removeAllActions()
+        self.view.removeFromParent()
     }
     
     func configPhysics() {
@@ -63,22 +71,34 @@ class PlayerController: Controller {
         view.name = "player"
         
         view.handleContact = { [unowned self] otherView in
-            if otherView.physicsBody?.categoryBitMask == BitMask.ENEMY && otherView.fillColor == self.view.fillColor {
+            if otherView.physicsBody?.categoryBitMask == BitMask.ENEMY &&
+                otherView.fillColor == self.view.fillColor {
+                
+                // contacted turn ON -> player will no longer contact with other object anymore -> will turn off later
                 self.view.contacted = true
                 otherView.removeFromParent()
-                Level1.minusMaxEnemy()
+                self.didDestroyEnemy?()
                 
-                Level1.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.parent.frame.size.width / 2, y: self.parent.frame.size.height / 2), duration: 0.5, amplitudeX: 11, amplitudeY: 5))
-                
-                ExplosionController.makeShatter(parent: self.parent, color: self.view.fillColor)
+//                Level1.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.parent.frame.size.width / 2, y: self.parent.frame.size.height / 2), duration: 0.5, amplitudeX: 11, amplitudeY: 5))
+//                ExplosionController.makeShatter(position: self.position, parent: self.parent)
+            }
+            
+            if otherView.physicsBody?.categoryBitMask == BitMask.WALL_FOR_PLAYER {
+                self.parent.makeCameraShake!()
+                self.destroy()
             }
             
             if otherView.physicsBody?.categoryBitMask == BitMask.CHANGE_COLOR {
                 otherView.removeFromParent()
-                self.border.fillColor = otherView.fillColor
+//                self.border.fillColor = otherView.fillColor
                 self.view.fillColor = otherView.fillColor
             }
         }
+        
+        
+//        view.destroy = { [unowned self] in
+//            self.destroy()
+//        }
         
     }
 }

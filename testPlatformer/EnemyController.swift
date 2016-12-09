@@ -35,7 +35,7 @@ class EnemyController: Controller {
         view.fillColor = cGREEN
     }
     
-    override func config(position: CGPoint, parent: SKNode, shootAction: SKAction?, moveAction: SKAction?) {
+    override func config(position: CGPoint, parent: Scene, shootAction: SKAction?, moveAction: SKAction?) {
         super.config(position: position, parent: parent, shootAction: shootAction, moveAction: moveAction)
         self.parent = parent
         configPhysics()

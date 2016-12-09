@@ -43,16 +43,16 @@ class GameOver: SKScene {
 //        let gameScene = GameScene(size: self.frame.size)
 //        gameScene.view?.presentScene(gameScene, transition: reveal)
         let touch = touches.first
-        if let location = touch?.location(in: self){
-            let node = self.nodes(at: location)
-            
-            if node[0].name == "TTTA"{
-                        let reveal = SKTransition.fade(withDuration: 0.5)
-                        let gameScene = GameScene(size: self.frame.size)
-                        self.view?.presentScene(gameScene, transition: reveal)
-                
-            }
-        }
+//        if let location = touch?.location(in: self){
+//            let node = self.nodes(at: location)
+//            
+//            if node[0].name == "TTTA"{
+//                        let reveal = SKTransition.fade(withDuration: 0.5)
+//                        let gameScene = GameScene(size: self.frame.size)
+//                        self.view?.presentScene(gameScene, transition: reveal)
+//                
+//            }
+//        }
     }
 }
     

@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+
 extension SKAction {
     class func shake(initialPosition:CGPoint, duration:Float, amplitudeX:Int = 12, amplitudeY:Int = 3) -> SKAction {
         let startingX = initialPosition.x
@@ -21,39 +22,26 @@ extension SKAction {
         actionsArray.append(SKAction.move(to: initialPosition, duration: 0.015))
         return SKAction.sequence(actionsArray)
     }
+    
+    static func moveToPath(position: CGPoint,  rect: CGRect, duration: TimeInterval) -> SKAction {
+        let bezier = UIBezierPath(rect: CGRect(x: position.x, y: position.y, width: 100, height: 100))
+        return SKAction.follow(bezier.cgPath, asOffset: true, orientToPath: false, duration: duration)
+    }
+
 }
 
 extension CGFloat {
     var convertToInt: Int { return Int(self) }
 }
 
-//extension CGPath {
-//    var getPolygonPath: CGPath {
-//        let polygonPath = UIBezierPath()
-//        polygonPath.move(to: CGPoint(x: 0, y: 37.5))
-//        polygonPath.addLine(to: CGPoint(x: 35.66, y: 11.59))
-//        polygonPath.addLine(to: CGPoint(x: 22.04, y: -30.34))
-//        polygonPath.addLine(to: CGPoint(x: -22.04, y: -30.34))
-//        polygonPath.addLine(to: CGPoint(x: -35.66, y: 11.59))
-//        polygonPath.close()
-//        
-//        return polygonPath.cgPath
-//    }
-//    
-//    var getTrianglePath: CGPath {
-//        let trianglePath = UIBezierPath()
-//        trianglePath.move(to: CGPoint(x: -37.5, y: -31.5))
-//        trianglePath.addCurve(to: CGPoint(x: 0, y: 43.5), controlPoint1: CGPoint(x: -0.58, y: 42.35), controlPoint2: CGPoint(x: 0, y: 43.5))
-//        trianglePath.addLine(to: CGPoint(x: 37.5, y: -31.5))
-//        trianglePath.addLine(to: CGPoint(x: -37.5, y: -31.5))
-//        return trianglePath.cgPath
-//    }
-//}
-
-extension SKAction {
-    static func moveToPath(position: CGPoint,  rect: CGRect, duration: TimeInterval) -> SKAction {
-        let bezier = UIBezierPath(rect: CGRect(x: position.x, y: position.y, width: 100, height: 100))
-        return SKAction.follow(bezier.cgPath, asOffset: true, orientToPath: false, duration: duration)
+extension SKScene {
+    static func sceneWithClassNamed(className: String, fileNamed fileName: String) -> SKScene? {
+        guard let SceneClass = NSClassFromString("testPlatformer.\(className)") as? SKScene.Type,
+            let scene = SceneClass.init(fileNamed: fileName) else {
+                return nil
+        }
+        
+        return scene
     }
 }
 

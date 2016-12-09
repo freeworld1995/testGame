@@ -9,10 +9,10 @@
 import SpriteKit
 import GameplayKit
 
-class Level1: SKScene, SKPhysicsContactDelegate {
+class Level1: Scene, SKPhysicsContactDelegate {
     
     let playerController = PlayerController()
-    static var cameraNode: SKCameraNode!
+    var cameraNode: SKCameraNode!
     //    var arrayColor: [UIColor] = [cRED, cGREEN, cBLUE]
     //
     //    func randColor() {
@@ -22,75 +22,66 @@ class Level1: SKScene, SKPhysicsContactDelegate {
     
     var arrayEnemyPosition: [CGPoint] = []
     var maxSpawningTurn: Int = 0
-    static var maxEnemyInScene: Int = 3
+    var maxEnemyInScene: Int = 3
     var arrayAddChangeColor: [() -> ()] = []
+    var addChangeColorTimer: Timer!
+    
+    deinit {
+        print("GameScene deinited")
+    }
     
     override init(size: CGSize) {
         super.init(size: size)
-        PlayerController.instance = playerController
-        //        spawnEnemy()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        print("GameScene deinited")
-    }
     
     override func didMove(to view: SKView) {
-//        self.removeAllChildren()
-//        
-//        if let recognizers = view.gestureRecognizers {
-//            for recognizer in recognizers {
-//                view.removeGestureRecognizer(recognizer)
-//                
-//            }
-//        }
+        makeCameraShake = { [unowned self] in
+            self.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.size.width / 2, y: self.size.height / 2), duration: 0.4, amplitudeX: 14, amplitudeY: 9))
+        }
+        
         addBackground()
         addPhysics()
         addGestureRecognizer(to: view)
         addWall()
         addCamera()
-        arrayAddChangeColor.append(addChangeColorTop)
-        arrayAddChangeColor.append(addChangeColorLeft)
-        arrayAddChangeColor.append(addChangeColorRight)
-        
-//        let enemyController = EnemyController()
-//        enemyController.config(position: CGPoint(x: 300, y: 500), parent: self, shootAction: nil, moveAction: nil)
-        let playerPosition = CGPoint(x: self.frame.midX, y: self.frame.midY)
-        playerController.config(position: playerPosition, parent: self, shootAction: nil, moveAction: nil)
-        spawnEnemy()
-        
-        Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(addChangeColor), userInfo: nil, repeats: true)
+//        arrayAddChangeColor.append(addChangeColorTop)
+//        arrayAddChangeColor.append(addChangeColorLeft)
+//        arrayAddChangeColor.append(addChangeColorRight)
+        configPlayer()
+//        spawnEnemy()
+//        
+//        addChangeColorTimer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(addChangeColor), userInfo: nil, repeats: true)
         //        let pauseMenu = SKSpriteNode(color: UIColor.black, size: self.frame.size)
         //        pauseMenu.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
         //        pauseMenu.alpha = 0.4
         //        pauseMenu.zPosition = 5
         //        addChild(pauseMenu)
+        
+    }
+    
+    func configPlayer() -> Void {
+        let playerPosition = CGPoint(x: self.frame.midX, y: self.frame.midY)
+        playerController.config(position: playerPosition, parent: self, shootAction: nil, moveAction: nil)
+        self.playerController.didDestroyEnemy = { [unowned self] in
+            self.maxEnemyInScene -= 1
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [unowned self] in
+                self.playerController.view.contacted = false
+            }
+        }
     }
     
     func addChangeColor() {
         arrayAddChangeColor = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: arrayAddChangeColor) as! [() -> ()]
         arrayAddChangeColor[0]()
     }
-//    
-//    func changeScene() {
-//        playerController.view.removeFromParent()
-//        self.removeAllActions()
-//        self.removeAllChildren()
-//        self.removeFromParent()
-//        self.scene?.removeFromParent()
-//        self.scene?.removeAllChildren()
-//        let newGameScene = GameScene(size: self.frame.size)
-//        newGameScene.scaleMode = .aspectFill
-//        
-//        self.view!.presentScene(newGameScene)
-//
-//    }
     
-    func addChangeColorTop() {
+    lazy var addChangeColorTop : () -> () = { [unowned self] in
         let changeColorController = ChangeColorController()
         changeColorController.randColor()
         let randPosX = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.width.convertToInt / 5, highestValue: self.size.width.convertToInt * 9 / 10)
@@ -98,7 +89,7 @@ class Level1: SKScene, SKPhysicsContactDelegate {
         changeColorController.view.physicsBody?.velocity = CGVector.goDown(velocity: 500)
     }
     
-    func addChangeColorLeft() {
+    lazy var addChangeColorLeft : () -> () = { [unowned self] in
         let changeColorController = ChangeColorController()
         changeColorController.randColor()
         let randPosY = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.height.convertToInt / 5, highestValue: self.size.height.convertToInt * 9 / 10)
@@ -106,7 +97,7 @@ class Level1: SKScene, SKPhysicsContactDelegate {
         changeColorController.view.physicsBody?.velocity = CGVector.goRight(velocity: 500)
     }
     
-    func addChangeColorRight() {
+    lazy var addChangeColorRight : () -> () = { [unowned self] in
         let changeColorController = ChangeColorController()
         changeColorController.randColor()
         let randPosY = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.height.convertToInt / 5, highestValue: self.size.height.convertToInt * 9 / 10)
@@ -134,20 +125,13 @@ class Level1: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-//        for i in 1...2 {
-//            let xPos = fabs(arrayEnemyPosition[0].x - arrayEnemyPosition[i].x)
-//            let yPos = fabs(arrayEnemyPosition[0].y - arrayEnemyPosition[i].y)
-//            
-//            if ((xPos < 70) || (yPos < 70)) {
-//                randomEnemyPosition()
-//            }
-//        }
-    }
-    
-    static func minusMaxEnemy() {
-        Level1.maxEnemyInScene -= 1
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            PlayerController.instance.view.contacted = false
+        for i in 1...2 {
+            let xPos = fabs(arrayEnemyPosition[0].x - arrayEnemyPosition[i].x)
+            let yPos = fabs(arrayEnemyPosition[0].y - arrayEnemyPosition[i].y)
+            
+            if ((xPos < 70) || (yPos < 70)) {
+                randomEnemyPosition()
+            }
         }
     }
     
@@ -160,21 +144,15 @@ class Level1: SKScene, SKPhysicsContactDelegate {
             enemyController.activateAutoChangeColor()
         }
         maxSpawningTurn += 1
-        Level1.maxEnemyInScene = 3
+        self.maxEnemyInScene = 3
     }
     
     override func update(_ currentTime: TimeInterval) {
-        
-        //        cameraNode.position = playerController.position
         if maxSpawningTurn != 3 {
-            if Level1.maxEnemyInScene == 0 {
+            if self.maxEnemyInScene == 0 {
                 spawnEnemy()
             }
         }
-    }
-    
-    func convert(point: CGPoint)->CGPoint {
-        return self.view!.convert(CGPoint(x: point.x, y:self.view!.frame.height-point.y), to:self)
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -183,6 +161,7 @@ class Level1: SKScene, SKPhysicsContactDelegate {
                 return
         }
         
+        // if contacted turn ON -> object cannot contact anymore for a while
         if viewA.contacted || viewB.contacted {
             return
         }
@@ -197,10 +176,10 @@ class Level1: SKScene, SKPhysicsContactDelegate {
     }
     
     func addCamera() {
-        Level1.cameraNode = SKCameraNode()
-        addChild(Level1.cameraNode)
-        camera = Level1.cameraNode
-        Level1.cameraNode.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
+        cameraNode = SKCameraNode()
+        addChild(cameraNode)
+        camera = cameraNode
+        cameraNode.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
     }
     
     func addWall() {
@@ -214,7 +193,7 @@ class Level1: SKScene, SKPhysicsContactDelegate {
             otherView.removeFromParent()
         }
         addChild(wall)
-
+        
     }
     
     func addBackground() {
@@ -226,20 +205,32 @@ class Level1: SKScene, SKPhysicsContactDelegate {
         background.zPosition = -1
         background.handleContact = { [unowned self] otherView in
             if otherView.physicsBody?.categoryBitMask == BitMask.PLAYER {
-//                background.contacted = true
-                Level1.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.size.width / 2, y: self.size.height / 2), duration: 0.5, amplitudeX: 11, amplitudeY: 5))
-                
-                ExplosionController.makeShatter(parent: self, color: UIColor(red:0.56, green:0.55, blue:0.63, alpha:1.0))
+                //                background.contacted = true
+                ExplosionController.makeShatter(position: self.playerController.position, parent: self)
                 otherView.removeFromParent()
-                let newGameScene = Level1(size: self.frame.size)
-                newGameScene.scaleMode = .aspectFill
                 
-                self.view!.presentScene(Level1(size: self.frame.size))
-
-                //                self.physicsWorld.speed = 0.3
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    self.replay()
+                }
             }
         }
         addChild(background)
+    }
+    
+    func replay() {
+//        self.addChangeColorTimer.invalidate()
+        // Access UserDefaults
+        let defaults = UserDefaults.standard
+        
+        // Get "currentLevel"
+        let currentLevel = defaults.integer(forKey: "currentlevel")
+        print(currentLevel)
+        // load scene with the "currentLevel"
+        let newGameScene = Level1(size: self.frame.size)
+        newGameScene.scaleMode = .aspectFill
+        
+        self.view!.presentScene(newGameScene)
+        
     }
     
     func addPhysics() {
@@ -269,23 +260,23 @@ class Level1: SKScene, SKPhysicsContactDelegate {
     }
     
     func swipedRight(sender:UISwipeGestureRecognizer){
-        //        print("swiped right")
         playerController.view.physicsBody?.velocity = CGVector(dx: 500, dy: 0)
     }
     
     func swipedLeft(sender:UISwipeGestureRecognizer){
-        //        print("swiped left")
         playerController.view.physicsBody?.velocity = CGVector(dx: -500, dy: 0)
     }
     
     func swipedUp(sender:UISwipeGestureRecognizer){
-        //        print("swiped up")
         playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: 500)
     }
     
     func swipedDown(sender:UISwipeGestureRecognizer){
-        //        print("swiped down")
         playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: -500)
     }
+    
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        replay()
+//    }
     
 }
