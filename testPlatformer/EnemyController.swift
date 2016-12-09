@@ -48,10 +48,9 @@ class EnemyController: Controller {
         view.physicsBody?.affectedByGravity = true
         view.physicsBody?.linearDamping = 0
         view.physicsBody?.angularDamping = 0
-        view.physicsBody?.restitution = 80
         view.physicsBody?.categoryBitMask = BitMask.ENEMY
         view.physicsBody?.contactTestBitMask = BitMask.PLAYER
-        view.physicsBody?.collisionBitMask = BitMask.ENEMY
+        view.physicsBody?.collisionBitMask = 0
         view.zPosition = 1
         view.name = "enemy"
         if moveAction != nil {

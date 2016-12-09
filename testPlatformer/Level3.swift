@@ -111,7 +111,7 @@ class Level3: Scene, SKPhysicsContactDelegate {
     }
     
     override func update(_ currentTime: TimeInterval) {
-
+       cameraNode.position = playerController.position
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
