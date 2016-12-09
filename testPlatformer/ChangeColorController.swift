@@ -8,13 +8,14 @@
 
 import SpriteKit
 import GameplayKit
+import UIKit
 
 class ChangeColorController: Controller {
-
-    var arrayColor: [UIColor] = [cRED, cGREEN, cBLUE]
     
-    init() {
-        super.init(view: View(path: Shape.getTrianglePath()), color: cRED)
+    
+    
+    init(color: UIColor) {
+        super.init(view: View(path: Shape.getTrianglePath()), color: color)
     }
     
     deinit {
@@ -26,12 +27,10 @@ class ChangeColorController: Controller {
         self.parent = parent
         configPhysics()
     }
+//    func activateAutoChangeColor() {
+//        Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(UIColor.randColor), userInfo: nil, repeats: true)
+//    }
     
-    func randColor() {
-        arrayColor = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: arrayColor) as! [UIColor]
-        
-        view.fillColor = arrayColor[0]
-    }
     
     func configPhysics() {
         view.physicsBody = SKPhysicsBody(polygonFrom: view.path!)

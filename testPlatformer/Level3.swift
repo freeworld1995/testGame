@@ -9,14 +9,11 @@
 import SpriteKit
 import GameplayKit
 
-class Level1: Scene, SKPhysicsContactDelegate {
+class Level3: Scene, SKPhysicsContactDelegate {
     
     let playerController = PlayerController()
     var cameraNode: SKCameraNode!
-    var arrayEnemyPosition: [CGPoint] = []
-    var maxSpawningTurn: Int = 0
-    var maxEnemyInScene: Int = 3
-    var arrayAddChangeColor: [() -> ()] = []
+    var arrayPolygonEnemy: [() -> ()] = []
     var addChangeColorTimer: Timer!
     
     deinit {
@@ -42,13 +39,13 @@ class Level1: Scene, SKPhysicsContactDelegate {
         addGestureRecognizer(to: view)
         addWall()
         addCamera()
-        arrayAddChangeColor.append(addChangeColorTop)
-        arrayAddChangeColor.append(addChangeColorLeft)
-        arrayAddChangeColor.append(addChangeColorRight)
+        arrayPolygonEnemy.append(addEnemyTop)
+        arrayPolygonEnemy.append(addEnemyLeft)
+        arrayPolygonEnemy.append(addEnemyRight)
         configPlayer()
-        spawnEnemy()
-
-        addChangeColorTimer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(addChangeColor), userInfo: nil, repeats: true)
+        spawnTriangle()
+        
+        addChangeColorTimer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(addEnemy), userInfo: nil, repeats: true)
         
         //        let pauseMenu = SKSpriteNode(color: UIColor.black, size: self.frame.size)
         //        pauseMenu.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
@@ -62,7 +59,6 @@ class Level1: Scene, SKPhysicsContactDelegate {
         let playerPosition = CGPoint(x: self.frame.midX, y: self.frame.midY)
         playerController.config(position: playerPosition, parent: self, shootAction: nil, moveAction: nil)
         self.playerController.didDestroyEnemy = { [unowned self] in
-            self.maxEnemyInScene -= 1
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [unowned self] in
                 self.playerController.view.contacted = false
@@ -70,83 +66,52 @@ class Level1: Scene, SKPhysicsContactDelegate {
         }
     }
     
-    func addChangeColor() {
-        arrayAddChangeColor = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: arrayAddChangeColor) as! [() -> ()]
-        arrayAddChangeColor[0]()
+    func addEnemy() {
+        arrayPolygonEnemy = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: arrayPolygonEnemy) as! [() -> ()]
+        arrayPolygonEnemy[0]()
     }
     
-    lazy var addChangeColorTop : () -> () = { [unowned self] in
-        let changeColorController = ChangeColorController(color: UIColor.randColor())
+    lazy var addEnemyTop : () -> () = { [unowned self] in
+        let PolygonEnemyController = EnemyController(shape: Shape.getPolygonPath(), color: UIColor.randColor())
         
         let randPosX = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.width.convertToInt / 5, highestValue: self.size.width.convertToInt * 9 / 10)
-        changeColorController.config(position: CGPoint(x: randPosX.nextInt(), y: self.size.height.convertToInt), parent: self, shootAction: nil, moveAction: nil)
-        changeColorController.view.physicsBody?.velocity = CGVector.goDown(velocity: 500)
+        PolygonEnemyController.config(position: CGPoint(x: randPosX.nextInt(), y: self.size.height.convertToInt), parent: self, shootAction: nil, moveAction: nil)
+        PolygonEnemyController.view.physicsBody?.velocity = CGVector.goDown(velocity: 500)
     }
     
-    lazy var addChangeColorLeft : () -> () = { [unowned self] in
-        let changeColorController = ChangeColorController(color: UIColor.randColor())
+    lazy var addEnemyLeft : () -> () = { [unowned self] in
+        let PolygonEnemyController = EnemyController(shape: Shape.getPolygonPath(), color: cRED)
         
         let randPosY = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.height.convertToInt / 5, highestValue: self.size.height.convertToInt * 9 / 10)
-        changeColorController.config(position: CGPoint(x: 0, y: randPosY.nextInt()), parent: self, shootAction: nil, moveAction: nil)
-        changeColorController.view.physicsBody?.velocity = CGVector.goRight(velocity: 500)
+        PolygonEnemyController.config(position: CGPoint(x: 0, y: randPosY.nextInt()), parent: self, shootAction: nil, moveAction: nil)
+        PolygonEnemyController.view.physicsBody?.velocity = CGVector.goRight(velocity: 500)
     }
     
-    lazy var addChangeColorRight : () -> () = { [unowned self] in
-        let changeColorController = ChangeColorController(color: UIColor.randColor())
-      
+    lazy var addEnemyRight : () -> () = { [unowned self] in
+        let PolygonEnemyController = EnemyController(shape: Shape.getPolygonPath(), color: UIColor.randColor())
+        
         let randPosY = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.height.convertToInt / 5, highestValue: self.size.height.convertToInt * 9 / 10)
-        changeColorController.config(position: CGPoint(x: self.size.width.convertToInt, y: randPosY.nextInt()), parent: self, shootAction: nil, moveAction: nil)
-        changeColorController.view.physicsBody?.velocity = CGVector.goLeft(velocity: 500)
+        PolygonEnemyController.config(position: CGPoint(x: self.size.width.convertToInt, y: randPosY.nextInt()), parent: self, shootAction: nil, moveAction: nil)
+        PolygonEnemyController.view.physicsBody?.velocity = CGVector.goLeft(velocity: 500)
     }
+
     
-    func randomEnemyPosition() {
-        arrayEnemyPosition.removeAll()
+    func spawnTriangle() {
         
-        for _ in 1...3 {
-            let randPosX = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.width.convertToInt / 5, highestValue: self.size.width.convertToInt * 9 / 10)
-            let randPosY = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.height.convertToInt / 5, highestValue: self.size.height.convertToInt * 9 / 10)
-            
-            let enemyPosition = CGPoint(x: randPosX.nextInt(), y: randPosY.nextInt())
-            arrayEnemyPosition.append(enemyPosition)
-        }
+        let randPosX = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.width.convertToInt / 5, highestValue: self.size.width.convertToInt * 9 / 10)
+        let randPosY = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.height.convertToInt / 5, highestValue: self.size.height.convertToInt * 9 / 10)
         
-        for enemyPos in arrayEnemyPosition {
-            let xPos = fabs(playerController.position.x - enemyPos.x)
-            let yPos = fabs(playerController.position.y - enemyPos.y)
-            
-            if ((xPos < 40) || (yPos < 40)) {
-                randomEnemyPosition()
-            }
-        }
+        let trianglePosition = CGPoint(x: randPosX.nextInt(), y: randPosY.nextInt())
         
-        for i in 1...2 {
-            let xPos = fabs(arrayEnemyPosition[0].x - arrayEnemyPosition[i].x)
-            let yPos = fabs(arrayEnemyPosition[0].y - arrayEnemyPosition[i].y)
-            
-            if ((xPos < 70) || (yPos < 70)) {
-                randomEnemyPosition()
-            }
-        }
-    }
-    
-    func spawnEnemy() {
-        randomEnemyPosition()
-        
-        for i in 1...3 {
-            let enemyController = EnemyController(shape: Shape.getTrianglePath() , color: cRED)
-            enemyController.config(position: arrayEnemyPosition[i - 1], parent: self, shootAction: nil, moveAction: nil)
-            enemyController.activateAutoChangeColor()
-        }
-        maxSpawningTurn += 1
-        self.maxEnemyInScene = 3
+ 
+            let triangleController = ChangeColorController(color: UIColor.randColor())
+            triangleController.config(position: trianglePosition, parent: self, shootAction: nil, moveAction: nil)
+//            enemyController.activateAutoChangeColor()
+
     }
     
     override func update(_ currentTime: TimeInterval) {
-        if maxSpawningTurn != 3 {
-            if self.maxEnemyInScene == 0 {
-                spawnEnemy()
-            }
-        }
+
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -220,10 +185,10 @@ class Level1: Scene, SKPhysicsContactDelegate {
         let currentLevel = defaults.integer(forKey: "currentlevel")
         print(currentLevel)
         // load scene with the "currentLevel"
-        let newGameScene = SKScene(fileNamed: "Level\(currentLevel)")
-        newGameScene?.size = self.frame.size
-        newGameScene?.scaleMode = .aspectFill
-
+        let newGameScene = Level3(size: self.frame.size)
+        newGameScene.size = self.frame.size
+        newGameScene.scaleMode = .aspectFill
+        
         self.view!.presentScene(newGameScene)
         
     }
@@ -270,8 +235,8 @@ class Level1: Scene, SKPhysicsContactDelegate {
         playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: -500)
     }
     
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        replay()
-//    }
+    //    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    //        replay()
+    //    }
     
 }
