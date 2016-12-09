@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import AVFoundation
 
 class Level1: Scene, SKPhysicsContactDelegate {
     
@@ -19,6 +20,7 @@ class Level1: Scene, SKPhysicsContactDelegate {
     var arrayAddChangeColor: [() -> ()] = []
     var addChangeColorTimer: Timer!
     var arrayExstingEnemies: [EnemyController] = []
+    var player: AVAudioPlayer?
     
     deinit {
         print("GameScene deinited")
@@ -49,6 +51,7 @@ class Level1: Scene, SKPhysicsContactDelegate {
         configPlayer()
         addNextButton()
         spawnEnemy()
+        backGroundMusic()
         
         addChangeColorTimer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(addChangeColor), userInfo: nil, repeats: true)
         //
@@ -58,6 +61,20 @@ class Level1: Scene, SKPhysicsContactDelegate {
         //        pauseMenu.zPosition = 5
         //        addChild(pauseMenu)
         
+    }
+    
+    func backGroundMusic()  {
+        let url = Bundle.main.url(forResource: "ultraflow", withExtension: "wav")!
+        
+        do {
+            player = try AVAudioPlayer(contentsOf: url)
+            guard let player = player else { return }
+            print("music")
+            player.prepareToPlay()
+            player.play()
+        } catch let error {
+            print(error.localizedDescription)
+        }
     }
     
     func addNextButton() {
@@ -229,6 +246,8 @@ class Level1: Scene, SKPhysicsContactDelegate {
     func replay() {
         self.addChangeColorTimer.invalidate()
         self.removeAllChildren()
+        
+        player?.stop()
         // Access UserDefaults
         let defaults = UserDefaults.standard
         

@@ -10,6 +10,7 @@ import SpriteKit
 import GameplayKit
 import UIKit
 import AVFoundation
+
 class Level4: Scene, SKPhysicsContactDelegate{
     var spawnTriangle : Timer!
     let playerController = PlayerController()
@@ -18,6 +19,7 @@ class Level4: Scene, SKPhysicsContactDelegate{
     var changeColor : SKNode!
     var firstTap: Bool = false
     var player: AVAudioPlayer?
+    
     override func didMove(to view: SKView) {
         makeCameraShake = { [unowned self] in
             self.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.size.width / 2, y: self.size.height / 2), duration: 0.4, amplitudeX: 14, amplitudeY: 9))
@@ -170,7 +172,7 @@ class Level4: Scene, SKPhysicsContactDelegate{
         } catch let error {
             print(error.localizedDescription)
         }
-           }
+    }
     
     func addPhysics() {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)

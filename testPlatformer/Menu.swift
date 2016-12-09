@@ -8,17 +8,20 @@
 
 import UIKit
 import SpriteKit
+import AVFoundation
 
 class Menu: Scene, SKPhysicsContactDelegate {
     
-    var player: PlayerController!
+    var playerController: PlayerController!
     var cameraNode: SKCameraNode!
-
+    var player: AVAudioPlayer?
+    
     override func didMove(to view: SKView) {
-        self.player = PlayerController()
+        self.playerController = PlayerController()
         addBackground()
         addPhysics()
         addCamera()
+        backGroundMusic()
         
         makeCameraShake = { [unowned self] in
             self.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.size.width / 2, y: self.size.height / 2), duration: 0.4, amplitudeX: 14, amplitudeY: 9))
@@ -30,7 +33,7 @@ class Menu: Scene, SKPhysicsContactDelegate {
         
         
         let action = SKAction.follow(bezier.cgPath, asOffset: false, orientToPath: false, speed: 420)
-        player.config(position: CGPoint(x: self.size.width / 2, y: self.size.height / 2), parent: self, shootAction: nil, moveAction: action)
+        playerController.config(position: CGPoint(x: self.size.width / 2, y: self.size.height / 2), parent: self, shootAction: nil, moveAction: action)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             let enemy1 = EnemyController(shape: Shape.getStarPath(), color: cRED)
@@ -43,6 +46,20 @@ class Menu: Scene, SKPhysicsContactDelegate {
             enemy2.view.fillColor = cGREEN
         }
         
+    }
+    
+    func backGroundMusic()  {
+        let url = Bundle.main.url(forResource: "ultraflow", withExtension: "wav")!
+        
+        do {
+            player = try AVAudioPlayer(contentsOf: url)
+            guard let player = player else { return }
+            print("music")
+            player.prepareToPlay()
+            player.play()
+        } catch let error {
+            print(error.localizedDescription)
+        }
     }
     
     func addPhysics() {
@@ -71,7 +88,7 @@ class Menu: Scene, SKPhysicsContactDelegate {
 
 //                Menu.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.size.width / 2, y: self.size.height / 2), duration: 0.4, amplitudeX: 14, amplitudeY: 9))
                 
-                ExplosionController.makeShatter(position: self.player.position, parent: self)
+                ExplosionController.makeShatter(position: self.playerController.position, parent: self)
             }
         }
         addChild(background)

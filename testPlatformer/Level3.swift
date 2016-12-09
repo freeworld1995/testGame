@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import AVFoundation
 
 class Level3: Scene, SKPhysicsContactDelegate {
     
@@ -16,7 +17,7 @@ class Level3: Scene, SKPhysicsContactDelegate {
     var arrayPolygonEnemy: [() -> ()] = []
     var addEnemyTimer: Timer!
     var addChangeColor: Timer!
-
+    var player: AVAudioPlayer?
     
     deinit {
         print("GameScene deinited")
@@ -47,6 +48,7 @@ class Level3: Scene, SKPhysicsContactDelegate {
         addNextButton()
         configPlayer()
         spawnTriangle()
+        backGroundMusic()
         
         addEnemyTimer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(addEnemy), userInfo: nil, repeats: true)
         
@@ -58,6 +60,20 @@ class Level3: Scene, SKPhysicsContactDelegate {
         //        pauseMenu.zPosition = 5
         //        addChild(pauseMenu)
         
+    }
+    
+    func backGroundMusic()  {
+        let url = Bundle.main.url(forResource: "ultraflow", withExtension: "wav")!
+        
+        do {
+            player = try AVAudioPlayer(contentsOf: url)
+            guard let player = player else { return }
+            print("music")
+            player.prepareToPlay()
+            player.play()
+        } catch let error {
+            print(error.localizedDescription)
+        }
     }
     
     func addNextButton() {
