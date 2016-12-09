@@ -107,8 +107,8 @@
 				BFDCE8A91DFB01CB00931672 /* Level1.sks */,
 				BFE6BB0D1DE3F74E00E362C5 /* Level2.swift */,
 				BF7EE0971DFB499700D217C9 /* Level3.swift */,
-				BFDF1FD91DF9A4C1004BC259 /* Menu.swift */,
 				69C90C5D1DFB526F0036ADEE /* Level4.swift */,
+				BFDF1FD91DF9A4C1004BC259 /* Menu.swift */,
 			);
 			name = Level;
 			sourceTree = "<group>";
