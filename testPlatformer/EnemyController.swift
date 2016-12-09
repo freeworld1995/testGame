@@ -11,6 +11,8 @@ import GameplayKit
 
 class EnemyController: Controller {
     
+    var timer: Timer!
+    
     init() {
         super.init(view: View(path: Shape.getStarPath()), color: cRED)
     }
@@ -20,7 +22,7 @@ class EnemyController: Controller {
     }
     
     func activateAutoChangeColor() {
-        Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(randColor), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(randColor), userInfo: nil, repeats: true)
     }
     
     var arrayColor: [UIColor] = [cRED, cGREEN, cBLUE]
@@ -30,14 +32,9 @@ class EnemyController: Controller {
         
         view.fillColor = arrayColor[0]
     }
-    
-    @objc func changeColor() {
-        view.fillColor = cGREEN
-    }
-    
+
     override func config(position: CGPoint, parent: Scene, shootAction: SKAction?, moveAction: SKAction?) {
         super.config(position: position, parent: parent, shootAction: shootAction, moveAction: moveAction)
-        self.parent = parent
         configPhysics()
     }
     

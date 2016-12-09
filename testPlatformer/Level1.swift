@@ -18,18 +18,19 @@ class Level1: Scene, SKPhysicsContactDelegate {
     var maxEnemyInScene: Int = 3
     var arrayAddChangeColor: [() -> ()] = []
     var addChangeColorTimer: Timer!
+    var arrayExstingEnemies: [EnemyController] = []
     
     deinit {
         print("GameScene deinited")
     }
     
-    override init(size: CGSize) {
-        super.init(size: size)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
+//    override init(size: CGSize) {
+//        super.init(size: size)
+//    }
+//    
+//    required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//    }
     
     override func didMove(to view: SKView) {
         
@@ -49,7 +50,7 @@ class Level1: Scene, SKPhysicsContactDelegate {
         spawnEnemy()
 
         addChangeColorTimer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(addChangeColor), userInfo: nil, repeats: true)
-        
+//
         //        let pauseMenu = SKSpriteNode(color: UIColor.black, size: self.frame.size)
         //        pauseMenu.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
         //        pauseMenu.alpha = 0.4
@@ -64,7 +65,7 @@ class Level1: Scene, SKPhysicsContactDelegate {
         self.playerController.didDestroyEnemy = { [unowned self] in
             self.maxEnemyInScene -= 1
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [unowned self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.playerController.view.contacted = false
             }
         }
@@ -129,6 +130,7 @@ class Level1: Scene, SKPhysicsContactDelegate {
         }
     }
     
+    
     func spawnEnemy() {
         randomEnemyPosition()
         
@@ -136,6 +138,7 @@ class Level1: Scene, SKPhysicsContactDelegate {
             let enemyController = EnemyController()
             enemyController.config(position: arrayEnemyPosition[i - 1], parent: self, shootAction: nil, moveAction: nil)
             enemyController.activateAutoChangeColor()
+            arrayExstingEnemies.append(enemyController)
         }
         maxSpawningTurn += 1
         self.maxEnemyInScene = 3
@@ -202,8 +205,12 @@ class Level1: Scene, SKPhysicsContactDelegate {
                 //                background.contacted = true
                 ExplosionController.makeShatter(position: self.playerController.position, parent: self)
                 otherView.removeFromParent()
+                for enemy in self.arrayExstingEnemies {
+                    enemy.timer.invalidate()
+//                    enemy.view.removeFromParent()
+                }
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     self.replay()
                 }
             }
@@ -213,6 +220,7 @@ class Level1: Scene, SKPhysicsContactDelegate {
     
     func replay() {
         self.addChangeColorTimer.invalidate()
+        self.removeAllChildren()
         // Access UserDefaults
         let defaults = UserDefaults.standard
         
@@ -220,9 +228,10 @@ class Level1: Scene, SKPhysicsContactDelegate {
         let currentLevel = defaults.integer(forKey: "currentlevel")
         print(currentLevel)
         // load scene with the "currentLevel"
-        let newGameScene = SKScene(fileNamed: "Level\(currentLevel)")
-        newGameScene?.size = self.frame.size
-        newGameScene?.scaleMode = .aspectFill
+//        let newGameScene = SKScene(fileNamed: "Level\(currentLevel)")
+        let newGameScene = Level1(size: self.frame.size)
+        newGameScene.size = self.frame.size
+        newGameScene.scaleMode = .aspectFill
 
         self.view!.presentScene(newGameScene)
         

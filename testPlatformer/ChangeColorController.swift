@@ -10,7 +10,7 @@ import SpriteKit
 import GameplayKit
 
 class ChangeColorController: Controller {
-    
+
     var arrayColor: [UIColor] = [cRED, cGREEN, cBLUE]
     
     init() {
