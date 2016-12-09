@@ -21,6 +21,8 @@
 		BF2A985D1DEA872500BC60B2 /* ExplosionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2A985C1DEA872500BC60B2 /* ExplosionController.swift */; };
 		BF2A985F1DEA9AB100BC60B2 /* earthquake.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF2A985E1DEA9AB100BC60B2 /* earthquake.wav */; };
 		BF7EE0981DFB499700D217C9 /* Level3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EE0971DFB499700D217C9 /* Level3.swift */; };
+		BF7EE09B1DFB5BBC00D217C9 /* ping1.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF7EE09A1DFB5BBC00D217C9 /* ping1.wav */; };
+		BF7EE09D1DFB5C0300D217C9 /* ultraflow.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF7EE09C1DFB5C0300D217C9 /* ultraflow.wav */; };
 		BFB1F3591DE49C8600EEA0E1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F3581DE49C8600EEA0E1 /* Constants.swift */; };
 		BFB1F35B1DE49FA000EEA0E1 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F35A1DE49FA000EEA0E1 /* Color.swift */; };
 		BFB1F35D1DE4A5D200EEA0E1 /* EnemyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F35C1DE4A5D200EEA0E1 /* EnemyController.swift */; };
@@ -54,6 +56,8 @@
 		BF2A985C1DEA872500BC60B2 /* ExplosionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplosionController.swift; sourceTree = "<group>"; };
 		BF2A985E1DEA9AB100BC60B2 /* earthquake.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = earthquake.wav; sourceTree = "<group>"; };
 		BF7EE0971DFB499700D217C9 /* Level3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level3.swift; sourceTree = "<group>"; };
+		BF7EE09A1DFB5BBC00D217C9 /* ping1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ping1.wav; sourceTree = "<group>"; };
+		BF7EE09C1DFB5C0300D217C9 /* ultraflow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ultraflow.wav; sourceTree = "<group>"; };
 		BFB1F3581DE49C8600EEA0E1 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BFB1F35A1DE49FA000EEA0E1 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		BFB1F35C1DE4A5D200EEA0E1 /* EnemyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyController.swift; sourceTree = "<group>"; };
@@ -85,6 +89,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF7EE0991DFB5B8100D217C9 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				BF7EE09C1DFB5C0300D217C9 /* ultraflow.wav */,
+				BF7EE09A1DFB5BBC00D217C9 /* ping1.wav */,
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
 		BFDCE8AB1DFB01E000931672 /* Level */ = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +129,7 @@
 		BFE6BB061DE3F74E00E362C5 /* testPlatformer */ = {
 			isa = PBXGroup;
 			children = (
+				BF7EE0991DFB5B8100D217C9 /* Sounds */,
 				BFDCE8AB1DFB01E000931672 /* Level */,
 				BFE6BB071DE3F74E00E362C5 /* AppDelegate.swift */,
 				BFE6BB0B1DE3F74E00E362C5 /* Actions.sks */,
@@ -215,6 +229,8 @@
 				BF2A984B1DE9F81A00BC60B2 /* shatter.sks in Resources */,
 				BFE6BB181DE3F74E00E362C5 /* LaunchScreen.storyboard in Resources */,
 				BFE6BB0C1DE3F74E00E362C5 /* Actions.sks in Resources */,
+				BF7EE09D1DFB5C0300D217C9 /* ultraflow.wav in Resources */,
+				BF7EE09B1DFB5BBC00D217C9 /* ping1.wav in Resources */,
 				69112EA51DEB26280081246A /* GameOverScene.sks in Resources */,
 				BFDCE8AA1DFB01CB00931672 /* Level1.sks in Resources */,
 				BF2A985B1DE9FB0C00BC60B2 /* Triangle@3x.png in Resources */,

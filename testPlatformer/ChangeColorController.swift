@@ -34,6 +34,15 @@ class ChangeColorController: Controller {
         view.fillColor = arrayColor[0]
     }
     
+    func selfDestroy() {
+        let destroy = SKAction.run { [unowned self] in 
+            self.view.removeFromParent()
+        }
+        
+        view.run(.sequence([.wait(forDuration: 2), destroy]))
+
+    }
+    
     func configPhysics() {
         view.physicsBody = SKPhysicsBody(polygonFrom: view.path!)
         view.physicsBody?.isDynamic = true

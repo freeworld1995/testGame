@@ -14,7 +14,9 @@ class Level3: Scene, SKPhysicsContactDelegate {
     let playerController = PlayerController()
     var cameraNode: SKCameraNode!
     var arrayPolygonEnemy: [() -> ()] = []
-    var addChangeColorTimer: Timer!
+    var addEnemyTimer: Timer!
+    var addChangeColor: Timer!
+
     
     deinit {
         print("GameScene deinited")
@@ -45,7 +47,9 @@ class Level3: Scene, SKPhysicsContactDelegate {
         configPlayer()
         spawnTriangle()
         
-        addChangeColorTimer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(addEnemy), userInfo: nil, repeats: true)
+        addEnemyTimer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(addEnemy), userInfo: nil, repeats: true)
+        
+        addChangeColor = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(spawnTriangle), userInfo: nil, repeats: true)
         
         //        let pauseMenu = SKSpriteNode(color: UIColor.black, size: self.frame.size)
         //        pauseMenu.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
@@ -94,24 +98,30 @@ class Level3: Scene, SKPhysicsContactDelegate {
         PolygonEnemyController.config(position: CGPoint(x: self.size.width.convertToInt, y: randPosY.nextInt()), parent: self, shootAction: nil, moveAction: nil)
         PolygonEnemyController.view.physicsBody?.velocity = CGVector.goLeft(velocity: 500)
     }
-
     
     func spawnTriangle() {
-        
-        let randPosX = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.width.convertToInt / 5, highestValue: self.size.width.convertToInt * 9 / 10)
-        let randPosY = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.height.convertToInt / 5, highestValue: self.size.height.convertToInt * 9 / 10)
-        
-        let trianglePosition = CGPoint(x: randPosX.nextInt(), y: randPosY.nextInt())
-        
- 
+
+            let randPosX = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.width.convertToInt / 5, highestValue: self.size.width.convertToInt * 9 / 10)
+            let randPosY = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.height.convertToInt / 5, highestValue: self.size.height.convertToInt * 9 / 10)
+            
+            let trianglePosition = CGPoint(x: randPosX.nextInt(), y: randPosY.nextInt())
+            
             let triangleController = ChangeColorController(color: UIColor.randColor())
             triangleController.config(position: trianglePosition, parent: self, shootAction: nil, moveAction: nil)
-//            enemyController.activateAutoChangeColor()
+//            triangleController.selfDestroy()
+        let destroy = SKAction.run { [unowned self] in
+            triangleController.view.removeFromParent()
+        }
+        
+        triangleController.view.run(.sequence([.wait(forDuration: 3.5), destroy]))
 
+                        //            enemyController.activateAutoChangeColor()
+        
     }
     
     override func update(_ currentTime: TimeInterval) {
-       cameraNode.position = playerController.position
+        //       cameraNode.position = playerController.position
+
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -177,7 +187,8 @@ class Level3: Scene, SKPhysicsContactDelegate {
     }
     
     func replay() {
-        self.addChangeColorTimer.invalidate()
+        self.addEnemyTimer.invalidate()
+        self.addChangeColor.invalidate()
         // Access UserDefaults
         let defaults = UserDefaults.standard
         
