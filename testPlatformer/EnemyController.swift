@@ -13,8 +13,8 @@ class EnemyController: Controller {
     
     var timer: Timer!
     
-    init() {
-        super.init(view: View(path: Shape.getStarPath()), color: cRED)
+    init(shape: CGPath, color: UIColor) {
+        super.init(view: View(path: shape), color: color)
     }
     
     deinit {

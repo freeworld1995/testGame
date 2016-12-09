@@ -8,6 +8,7 @@
 
 import SpriteKit
 import UIKit
+import GameKit
 
 extension SKAction {
     class func shake(initialPosition:CGPoint, duration:Float, amplitudeX:Int = 12, amplitudeY:Int = 3) -> SKAction {
@@ -104,6 +105,13 @@ extension UIColor{
     static func fromString(name: String) ->UIColor{
         return (ColorEnum(rawValue: name)?.toColor())!
     }
+   static func randColor() -> UIColor {
+        var arrayColor: [UIColor] = [cRED, cGREEN, cBLUE]
+        arrayColor = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: arrayColor) as! [UIColor]
+        
+        return arrayColor[0]
+    }
+    
 }
 
 extension UIBezierPath{

@@ -33,12 +33,12 @@ class Menu: Scene, SKPhysicsContactDelegate {
         player.config(position: CGPoint(x: self.size.width / 2, y: self.size.height / 2), parent: self, shootAction: nil, moveAction: action)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            let enemy1 = EnemyController()
+            let enemy1 = EnemyController(shape: Shape.getStarPath(), color: cRED)
             enemy1.config(position: CGPoint(x: self.size.width / 2, y: self.size.height / 2), parent: self, shootAction: nil, moveAction: action)
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            let enemy2 = EnemyController()
+            let enemy2 = EnemyController(shape: Shape.getPolygonPath(), color: cGREEN)
             enemy2.config(position: CGPoint(x: self.size.width / 2, y: self.size.height / 2), parent: self, shootAction: nil, moveAction: action)
             enemy2.view.fillColor = cGREEN
         }

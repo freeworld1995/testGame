@@ -8,13 +8,14 @@
 
 import SpriteKit
 import GameplayKit
+import UIKit
 
 class ChangeColorController: Controller {
 
     var arrayColor: [UIColor] = [cRED, cGREEN, cBLUE]
     
-    init() {
-        super.init(view: View(path: Shape.getTrianglePath()), color: cRED)
+    init(color: UIColor) {
+        super.init(view: View(path: Shape.getTrianglePath()), color: color)
     }
     
     deinit {

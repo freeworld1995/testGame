@@ -77,24 +77,24 @@ class Level1: Scene, SKPhysicsContactDelegate {
     }
     
     lazy var addChangeColorTop : () -> () = { [unowned self] in
-        let changeColorController = ChangeColorController()
-        changeColorController.randColor()
+        let changeColorController = ChangeColorController(color: UIColor.randColor())
+        
         let randPosX = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.width.convertToInt / 5, highestValue: self.size.width.convertToInt * 9 / 10)
         changeColorController.config(position: CGPoint(x: randPosX.nextInt(), y: self.size.height.convertToInt), parent: self, shootAction: nil, moveAction: nil)
         changeColorController.view.physicsBody?.velocity = CGVector.goDown(velocity: 500)
     }
     
     lazy var addChangeColorLeft : () -> () = { [unowned self] in
-        let changeColorController = ChangeColorController()
-        changeColorController.randColor()
+        let changeColorController = ChangeColorController(color: UIColor.randColor())
+        
         let randPosY = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.height.convertToInt / 5, highestValue: self.size.height.convertToInt * 9 / 10)
         changeColorController.config(position: CGPoint(x: 0, y: randPosY.nextInt()), parent: self, shootAction: nil, moveAction: nil)
         changeColorController.view.physicsBody?.velocity = CGVector.goRight(velocity: 500)
     }
     
     lazy var addChangeColorRight : () -> () = { [unowned self] in
-        let changeColorController = ChangeColorController()
-        changeColorController.randColor()
+        let changeColorController = ChangeColorController(color: UIColor.randColor())
+      
         let randPosY = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.height.convertToInt / 5, highestValue: self.size.height.convertToInt * 9 / 10)
         changeColorController.config(position: CGPoint(x: self.size.width.convertToInt, y: randPosY.nextInt()), parent: self, shootAction: nil, moveAction: nil)
         changeColorController.view.physicsBody?.velocity = CGVector.goLeft(velocity: 500)
@@ -135,7 +135,7 @@ class Level1: Scene, SKPhysicsContactDelegate {
         randomEnemyPosition()
         
         for i in 1...3 {
-            let enemyController = EnemyController()
+            let enemyController = EnemyController(shape: Shape.getTrianglePath() , color: cRED)
             enemyController.config(position: arrayEnemyPosition[i - 1], parent: self, shootAction: nil, moveAction: nil)
             enemyController.activateAutoChangeColor()
             arrayExstingEnemies.append(enemyController)
