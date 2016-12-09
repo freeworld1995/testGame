@@ -7,14 +7,14 @@
 //
 
 import SpriteKit
-
+import AVFoundation
 typealias DidDestroyEnemyType = () -> ()
 
 class PlayerController: Controller {
     
     var border: SKShapeNode!
     var didDestroyEnemy: DidDestroyEnemyType?
-    
+    var explosion : AVAudioPlayer!
     init() {
         super.init(view: View(path: Shape.getRectanglePath()), color: cBLUE)
         
@@ -80,6 +80,18 @@ class PlayerController: Controller {
                 self.didDestroyEnemy?()
                 self.parent.makeCameraShake!()
                 ExplosionController.makeShatter(position: self.position, parent: self.parent)
+                
+                let url = Bundle.main.url(forResource: "ping1", withExtension: "wav")!
+                
+                do {
+                    self.explosion = try AVAudioPlayer(contentsOf: url)
+                    guard let player = self.explosion else { return }
+                   
+                    player.prepareToPlay()
+                    player.play()
+                } catch let error {
+                    print(error.localizedDescription)
+                }
             }
             
             if otherView.physicsBody?.categoryBitMask == BitMask.WALL_FOR_PLAYER {

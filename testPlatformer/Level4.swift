@@ -9,7 +9,7 @@
 import SpriteKit
 import GameplayKit
 import UIKit
-
+import AVFoundation
 class Level4: Scene, SKPhysicsContactDelegate{
     var spawnTriangle : Timer!
     let playerController = PlayerController()
@@ -17,7 +17,7 @@ class Level4: Scene, SKPhysicsContactDelegate{
     let tapToStartNode = SKSpriteNode(imageNamed: "TapToStart")
     var changeColor : SKNode!
     var firstTap: Bool = false
-    
+    var player: AVAudioPlayer?
     override func didMove(to view: SKView) {
         makeCameraShake = { [unowned self] in
             self.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.size.width / 2, y: self.size.height / 2), duration: 0.4, amplitudeX: 14, amplitudeY: 9))
@@ -30,7 +30,7 @@ class Level4: Scene, SKPhysicsContactDelegate{
         addChangColorController()
         addNextButton()
         addPlayer()
-        
+        backGroundMusic()
         tapToStartNode.position = CGPoint(x: self.size.width / 2 , y: 300)
         
         addChild(tapToStartNode)
@@ -157,6 +157,20 @@ class Level4: Scene, SKPhysicsContactDelegate{
         
         addChild(background)
     }
+    
+    func backGroundMusic()  {
+        let url = Bundle.main.url(forResource: "ultraflow", withExtension: "wav")!
+        
+        do {
+            player = try AVAudioPlayer(contentsOf: url)
+            guard let player = player else { return }
+            print("music")
+            player.prepareToPlay()
+            player.play()
+        } catch let error {
+            print(error.localizedDescription)
+        }
+           }
     
     func addPhysics() {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
