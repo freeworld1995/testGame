@@ -48,6 +48,22 @@ class Shape {
         return starPath.cgPath
     }
     
+    static func getHexagonPath() ->CGPath{
+        let hexagonPath = UIBezierPath()
+        hexagonPath.move(to: CGPoint(x: -37.5, y: -2.08))
+        hexagonPath.addCurve(to: CGPoint(x: -14.88, y: 37.5), controlPoint1: CGPoint(x: -14.85, y: 37.55), controlPoint2: CGPoint(x: -14.88, y: 37.5))
+        hexagonPath.addLine(to: CGPoint(x: 16.07, y: 37.5))
+        hexagonPath.addLine(to: CGPoint(x: 37.5, y: -0))
+        hexagonPath.addLine(to: CGPoint(x: 16.07, y: -37.5))
+        hexagonPath.addLine(to: CGPoint(x: -14.88, y: -37.5))
+        hexagonPath.addLine(to: CGPoint(x: -36.31, y: -0))
+        UIColor.black.setStroke()
+        hexagonPath.lineWidth = 1
+        hexagonPath.stroke()
+        return hexagonPath.cgPath
+    
+    }
+    
     static func getOvalPath() -> CGPath {
         let ovalPath = UIBezierPath(ovalIn: CGRect(x: -38, y: -38, width: 75, height: 75))
         return ovalPath.cgPath

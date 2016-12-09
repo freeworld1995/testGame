@@ -10,7 +10,7 @@ import SpriteKit
 import GameplayKit
 import UIKit
 
-class Level2: Scene, SKPhysicsContactDelegate{
+class Level4: Scene, SKPhysicsContactDelegate{
     var spawnTriangle : Timer!
     let playerController = PlayerController()
     var cameraNode: SKCameraNode!
@@ -44,6 +44,11 @@ class Level2: Scene, SKPhysicsContactDelegate{
         let enemyController3 = EnemyController(shape: Shape.getStarPath(), color: cGREEN)
         enemyController3.view.fillColor = cBLUE
         enemyController3.config(position: CGPoint(x: 130, y: 250), parent: self, shootAction: nil, moveAction: nil)
+        
+        let enemyControllerCycle = EnemyController(shape: Shape.getHexagonPath(), color: UIColor.randColor())
+        let kindaCyclePath = UIBezierPath(ovalIn: CGRect(x: 109, y: 123, width: 806, height: 507))
+        enemyControllerCycle.view.run(SKAction.repeatForever(SKAction.follow(kindaCyclePath.cgPath, duration: 10)))
+        enemyControllerCycle.config(position: CGPoint(x:77, y: 24.81)  , parent: self, shootAction: nil, moveAction: nil)
         
         spawnTriangle = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(addChangColorController), userInfo: nil, repeats: true)
         //
@@ -82,6 +87,8 @@ class Level2: Scene, SKPhysicsContactDelegate{
         changeColorController.config(position: changeColorControllerPosition , parent: self, shootAction: nil, moveAction: trianglePath)
         
     }
+    
+    
     
     func didBegin(_ contact: SKPhysicsContact) {
         guard let viewA = contact.bodyA.node as? View, let viewB = contact.bodyB.node as? View
@@ -142,10 +149,10 @@ class Level2: Scene, SKPhysicsContactDelegate{
                 pauseMenu.zPosition = 5
                 self.addChild(pauseMenu)
                 
-                            let sceneToMoveTo = Level2(size: self.size)
-                            sceneToMoveTo.scaleMode = self.scaleMode
-                            let sceneTransition = SKTransition.doorsOpenVertical(withDuration: 0.4)
-                            self.view!.presentScene(sceneToMoveTo, transition: sceneTransition)
+                let sceneToMoveTo = Level2(size: self.size)
+                sceneToMoveTo.scaleMode = self.scaleMode
+                let sceneTransition = SKTransition.doorsOpenVertical(withDuration: 0.4)
+                self.view!.presentScene(sceneToMoveTo, transition: sceneTransition)
                 
                 //                ExplosionController.makeShatter(position: self.playerController.position, parent: self)
                 //                self.physicsWorld.speed = 0.3
@@ -203,12 +210,12 @@ class Level2: Scene, SKPhysicsContactDelegate{
     
     func random_Int(min : Int, max : Int) -> Int {
         return Int(arc4random_uniform(UInt32(max - min + 1))) + min
+        
     }
     
     func random(min : CGFloat, max: CGFloat) -> CGFloat {
         return CGFloat(arc4random_uniform(UInt32(max - min + 1))) + min
     }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if !firstTap {
             tapToStartNode.removeFromParent()
