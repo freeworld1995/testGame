@@ -20,6 +20,7 @@
 		BF2A985B1DE9FB0C00BC60B2 /* Triangle@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF2A98581DE9FB0C00BC60B2 /* Triangle@3x.png */; };
 		BF2A985D1DEA872500BC60B2 /* ExplosionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2A985C1DEA872500BC60B2 /* ExplosionController.swift */; };
 		BF2A985F1DEA9AB100BC60B2 /* earthquake.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF2A985E1DEA9AB100BC60B2 /* earthquake.wav */; };
+		BF7EE0981DFB499700D217C9 /* Level3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EE0971DFB499700D217C9 /* Level3.swift */; };
 		BFB1F3591DE49C8600EEA0E1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F3581DE49C8600EEA0E1 /* Constants.swift */; };
 		BFB1F35B1DE49FA000EEA0E1 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F35A1DE49FA000EEA0E1 /* Color.swift */; };
 		BFB1F35D1DE4A5D200EEA0E1 /* EnemyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F35C1DE4A5D200EEA0E1 /* EnemyController.swift */; };
@@ -52,6 +53,7 @@
 		BF2A98581DE9FB0C00BC60B2 /* Triangle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Triangle@3x.png"; sourceTree = "<group>"; };
 		BF2A985C1DEA872500BC60B2 /* ExplosionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplosionController.swift; sourceTree = "<group>"; };
 		BF2A985E1DEA9AB100BC60B2 /* earthquake.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = earthquake.wav; sourceTree = "<group>"; };
+		BF7EE0971DFB499700D217C9 /* Level3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level3.swift; sourceTree = "<group>"; };
 		BFB1F3581DE49C8600EEA0E1 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BFB1F35A1DE49FA000EEA0E1 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		BFB1F35C1DE4A5D200EEA0E1 /* EnemyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyController.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				BFDF1FD71DF9A46F004BC259 /* Level1.swift */,
 				BFDCE8A91DFB01CB00931672 /* Level1.sks */,
 				BFE6BB0D1DE3F74E00E362C5 /* Level2.swift */,
+				BF7EE0971DFB499700D217C9 /* Level3.swift */,
 				BFDF1FD91DF9A4C1004BC259 /* Menu.swift */,
 			);
 			name = Level;
@@ -243,6 +246,7 @@
 				BFDF09A11DE80E50004226DB /* ChangeColorController.swift in Sources */,
 				BF17870F1DE4057B00BF12CE /* Controller.swift in Sources */,
 				BF2A98471DE9DF0300BC60B2 /* Utils.swift in Sources */,
+				BF7EE0981DFB499700D217C9 /* Level3.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -45,7 +45,7 @@ class Level2: Scene, SKPhysicsContactDelegate{
         enemyController3.view.fillColor = cBLUE
         enemyController3.config(position: CGPoint(x: 130, y: 250), parent: self, shootAction: nil, moveAction: nil)
         
-        spawnTriangle = Timer.scheduledTimer(timeInterval: 15, target: self, selector: #selector(addChangColorController), userInfo: nil, repeats: true)
+        spawnTriangle = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(addChangColorController), userInfo: nil, repeats: true)
         //
         //        Timer.scheduledTimer(timeInterval: 15, target: self, selector: #selector(activateAutoChangeColor), userInfo: nil, repeats: true)
         
