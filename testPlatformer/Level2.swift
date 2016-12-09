@@ -27,25 +27,25 @@ class Level2: Scene, SKPhysicsContactDelegate{
         addGestureRecognizer(to: view)
         addWall()
         addCamera()
-        addChangColorController()
+//        addChangColorController()
         addPlayer()
         
         tapToStartNode.position = CGPoint(x: self.size.width / 2 , y: 300)
         
         addChild(tapToStartNode)
-        let enemyController1 = EnemyController(shape: Shape.getStarPath(), color: cRED)
+        let enemyController1 = EnemyController()
         enemyController1.view.fillColor = cRED
         enemyController1.config(position: CGPoint(x: 700, y: 550), parent: self, shootAction: nil, moveAction: nil)
         
-        let enemyController2 = EnemyController(shape: Shape.getStarPath(), color: cBLUE)
+        let enemyController2 = EnemyController()
         enemyController2.view.fillColor = cGREEN
         enemyController2.config(position: CGPoint(x: 300, y: 350), parent: self, shootAction: nil, moveAction: nil)
         
-        let enemyController3 = EnemyController(shape: Shape.getStarPath(), color: cGREEN)
+        let enemyController3 = EnemyController()
         enemyController3.view.fillColor = cBLUE
         enemyController3.config(position: CGPoint(x: 130, y: 250), parent: self, shootAction: nil, moveAction: nil)
         
-        spawnTriangle = Timer.scheduledTimer(timeInterval: 15, target: self, selector: #selector(addChangColorController), userInfo: nil, repeats: true)
+        //        spawnTriangle = Timer.scheduledTimer(timeInterval: 15, target: self, selector: #selector(addChangColorController), userInfo: nil, repeats: true)
         //
         //        Timer.scheduledTimer(timeInterval: 15, target: self, selector: #selector(activateAutoChangeColor), userInfo: nil, repeats: true)
         
@@ -60,12 +60,18 @@ class Level2: Scene, SKPhysicsContactDelegate{
     func addPlayer()  {
         let playerPosition = CGPoint(x: self.frame.midX , y: self.frame.midY / 2)
         playerController.config(position: playerPosition, parent: self, shootAction: nil, moveAction: nil)
+        self.playerController.didDestroyEnemy = { [unowned self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [unowned self] in
+                self.playerController.view.contacted = false
+            }
+        }
     }
     
     func addChangColorController()  {
-        let changeColorController = ChangeColorController(color: UIColor.randColor())
+        let changeColorController = ChangeColorController()
         // changeColorController.view.physicsBody?.isDynamic = true
-
+        let array = ["BLUE","GREEN","RED"]
+        changeColorController.view.fillColor = UIColor.fromString(name: array.random3Colors())
         let changeColorControllerPosition = CGPoint(x: random(min: self.size.width * 0.1, max: self.size.width * 0.9) , y: self.size.height)
         let path = UIBezierPath.setPath(positionX: changeColorControllerPosition.x, positionY: changeColorControllerPosition.y, view: self.view!)
         
@@ -74,17 +80,18 @@ class Level2: Scene, SKPhysicsContactDelegate{
         changeColorController.view.run(SKAction.sequence([trianglePath, SKAction.removeFromParent()]))
         
         changeColorController.config(position: changeColorControllerPosition , parent: self, shootAction: nil, moveAction: trianglePath)
-
-    }
-    
-    func convert(point: CGPoint)->CGPoint {
-        return self.view!.convert(CGPoint(x: point.x, y:self.view!.frame.height-point.y), to:self)
+        
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
         guard let viewA = contact.bodyA.node as? View, let viewB = contact.bodyB.node as? View
             else {
                 return
+        }
+        
+        // if contacted turn ON -> object cannot contact anymore for a while
+        if viewA.contacted || viewB.contacted {
+            return
         }
         
         if let handleContactA = viewA.handleContact {
@@ -112,7 +119,6 @@ class Level2: Scene, SKPhysicsContactDelegate{
         wall.name = "wall"
         wall.handleContact = { otherView in
             otherView.removeFromParent()
-
         }
         addChild(wall)
     }
@@ -128,18 +134,18 @@ class Level2: Scene, SKPhysicsContactDelegate{
         background.handleContact = { [unowned self] otherView in
             if otherView.physicsBody?.categoryBitMask == BitMask.PLAYER {
                 otherView.removeFromParent()
-                self.spawnTriangle.invalidate()
-                let pauseMenu = SKSpriteNode(color: cBACKGROUND, size: self.frame.size)
-                pauseMenu.position = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height/2)
-                pauseMenu.alpha = 0.05
-                pauseMenu.run(SKAction.fadeAlpha(to: 0.4, duration: 4))
-                pauseMenu.zPosition = 5
-                self.addChild(pauseMenu)
+                //                self.spawnTriangle.invalidate()
+                //                let pauseMenu = SKSpriteNode(color: cBACKGROUND, size: self.frame.size)
+                //                pauseMenu.position = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height/2)
+                //                pauseMenu.alpha = 0.05
+                //                pauseMenu.run(SKAction.fadeAlpha(to: 0.4, duration: 4))
+                //                pauseMenu.zPosition = 5
+                //                self.addChild(pauseMenu)
                 
-                            let sceneToMoveTo = Level2(size: self.size)
-                            sceneToMoveTo.scaleMode = self.scaleMode
-                            let sceneTransition = SKTransition.doorsOpenVertical(withDuration: 0.4)
-                            self.view!.presentScene(sceneToMoveTo, transition: sceneTransition)
+                let sceneToMoveTo = Level2(size: self.size)
+                sceneToMoveTo.scaleMode = self.scaleMode
+                let sceneTransition = SKTransition.doorsOpenVertical(withDuration: 0.4)
+                self.view!.presentScene(sceneToMoveTo, transition: sceneTransition)
                 
                 //                ExplosionController.makeShatter(position: self.playerController.position, parent: self)
                 //                self.physicsWorld.speed = 0.3
@@ -153,10 +159,6 @@ class Level2: Scene, SKPhysicsContactDelegate{
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         self.physicsWorld.contactDelegate = self
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
-    }
-    
-    func selfWorldSpeed()  {
-        
     }
     
     func addGestureRecognizer(to view: SKView) {

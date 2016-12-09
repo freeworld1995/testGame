@@ -8,7 +8,6 @@
 
 import SpriteKit
 import UIKit
-import GameKit
 
 extension SKAction {
     class func shake(initialPosition:CGPoint, duration:Float, amplitudeX:Int = 12, amplitudeY:Int = 3) -> SKAction {
@@ -81,7 +80,7 @@ extension Array{
 }
 
 extension UIColor{
-   
+    
     enum ColorEnum: String {
         case RED
         case GREEN
@@ -104,27 +103,18 @@ extension UIColor{
     
     static func fromString(name: String) ->UIColor{
         return (ColorEnum(rawValue: name)?.toColor())!
-        
     }
-   static func randColor() -> UIColor {
-        var arrayColor: [UIColor] = [cRED, cGREEN, cBLUE]
-        arrayColor = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: arrayColor) as! [UIColor]
-        
-        return arrayColor[0]
-    }
-    
 }
 
 extension UIBezierPath{
     
-    static   func setPath(positionX: CGFloat, positionY: CGFloat, view: UIView) -> [UIBezierPath] {
+    static func setPath(positionX: CGFloat, positionY: CGFloat, view: UIView) -> [UIBezierPath] {
         let path1: UIBezierPath = UIBezierPath()
         path1.move(to: CGPoint(x: 0, y: 0))
         path1.addLine(to: CGPoint(x: -100, y: -view.frame.size.height * 0.7))
         path1.addLine(to: CGPoint(x: 100, y: -view.frame.size.height * 0.3))
         path1.addLine(to: CGPoint(x: 50, y : -view.frame.size.height * 0.1))
         path1.addLine(to: CGPoint(x: 0, y: -view.frame.size.height - 30))
-        
         
         let path2: UIBezierPath = UIBezierPath()
         path2.move(to: CGPoint(x: 0, y: 0))
