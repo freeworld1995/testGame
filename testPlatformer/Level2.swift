@@ -17,6 +17,7 @@ class Level2: Scene, SKPhysicsContactDelegate{
     let tapToStartNode = SKSpriteNode(imageNamed: "TapToStart")
     var changeColor : SKNode!
     var firstTap: Bool = false
+
     
     override func didMove(to view: SKView) {
         makeCameraShake = { [unowned self] in
@@ -27,6 +28,7 @@ class Level2: Scene, SKPhysicsContactDelegate{
         addGestureRecognizer(to: view)
         addWall()
         addCamera()
+        addNextButton()
         addChangColorController()
         addPlayer()
         
@@ -56,6 +58,12 @@ class Level2: Scene, SKPhysicsContactDelegate{
     //        cameraNode.position = playerController.position
     //    }
     
+    func addNextButton() {
+        let nextButton = SKSpriteNode(imageNamed: "next")
+        nextButton.name = "next"
+        nextButton.position = CGPoint(x: self.size.width * 0.9, y: self.size.height * 0.9)
+        addChild(nextButton)
+    }
     
     func addPlayer()  {
         let playerPosition = CGPoint(x: self.frame.midX , y: self.frame.midY / 2)
@@ -216,15 +224,21 @@ class Level2: Scene, SKPhysicsContactDelegate{
             playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: 150)
             firstTap = true
             
-            for touch: AnyObject in touches {
-                let touchPos = touch.location(in: self)
-                let tappedNode = atPoint(touchPos)
-                let nameOfTappedNode = tappedNode.name
-                
-                if nameOfTappedNode == "TTTA" {
-                    tappedNode.alpha = 0.5
-                    
-                }
+        }
+        
+        for touch: AnyObject in touches {
+            let touchePos = touch.location(in: self)
+            let tappedNode = atPoint(touchePos)
+            let nameOfTappedNode = tappedNode.name
+            
+            // check if we click on something that don't have a 'NAME'
+            guard nameOfTappedNode != nil else {return}
+            
+            if nameOfTappedNode == "next" {
+                spawnTriangle.invalidate()
+                let newGameScene = Level3(size: self.frame.size)
+                newGameScene.scaleMode = .aspectFill
+                self.view!.presentScene(newGameScene)
             }
         }
     }

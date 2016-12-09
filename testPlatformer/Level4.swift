@@ -28,26 +28,16 @@ class Level4: Scene, SKPhysicsContactDelegate{
         addWall()
         addCamera()
         addChangColorController()
+        addNextButton()
         addPlayer()
         
         tapToStartNode.position = CGPoint(x: self.size.width / 2 , y: 300)
         
         addChild(tapToStartNode)
-        let enemyController1 = EnemyController(shape: Shape.getStarPath(), color: cRED)
-        enemyController1.view.fillColor = cRED
-        enemyController1.config(position: CGPoint(x: 700, y: 550), parent: self, shootAction: nil, moveAction: nil)
-        
-        let enemyController2 = EnemyController(shape: Shape.getStarPath(), color: cBLUE)
-        enemyController2.view.fillColor = cGREEN
-        enemyController2.config(position: CGPoint(x: 300, y: 350), parent: self, shootAction: nil, moveAction: nil)
-        
-        let enemyController3 = EnemyController(shape: Shape.getStarPath(), color: cGREEN)
-        enemyController3.view.fillColor = cBLUE
-        enemyController3.config(position: CGPoint(x: 130, y: 250), parent: self, shootAction: nil, moveAction: nil)
         
         let enemyControllerCycle = EnemyController(shape: Shape.getHexagonPath(), color: UIColor.randColor())
         let kindaCyclePath = UIBezierPath(ovalIn: CGRect(x: 109, y: 123, width: 806, height: 507))
-        enemyControllerCycle.view.run(SKAction.repeatForever(SKAction.follow(kindaCyclePath.cgPath, duration: 10)))
+        enemyControllerCycle.view.run(SKAction.repeatForever(SKAction.follow(kindaCyclePath.cgPath, asOffset: false, orientToPath: true, speed: 300)))
         enemyControllerCycle.config(position: CGPoint(x:77, y: 24.81)  , parent: self, shootAction: nil, moveAction: nil)
         
         spawnTriangle = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(addChangColorController), userInfo: nil, repeats: true)
@@ -61,6 +51,12 @@ class Level4: Scene, SKPhysicsContactDelegate{
     //        cameraNode.position = playerController.position
     //    }
     
+    func addNextButton() {
+        let nextButton = SKSpriteNode(imageNamed: "next")
+        nextButton.name = "next"
+        nextButton.position = CGPoint(x: self.size.width * 0.9, y: self.size.height * 0.9)
+        addChild(nextButton)
+    }
     
     func addPlayer()  {
         let playerPosition = CGPoint(x: self.frame.midX , y: self.frame.midY / 2)
@@ -149,7 +145,7 @@ class Level4: Scene, SKPhysicsContactDelegate{
                 pauseMenu.zPosition = 5
                 self.addChild(pauseMenu)
                 
-                let sceneToMoveTo = Level2(size: self.size)
+                let sceneToMoveTo = Level4(size: self.size)
                 sceneToMoveTo.scaleMode = self.scaleMode
                 let sceneTransition = SKTransition.doorsOpenVertical(withDuration: 0.4)
                 self.view!.presentScene(sceneToMoveTo, transition: sceneTransition)
@@ -216,6 +212,7 @@ class Level4: Scene, SKPhysicsContactDelegate{
     func random(min : CGFloat, max: CGFloat) -> CGFloat {
         return CGFloat(arc4random_uniform(UInt32(max - min + 1))) + min
     }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if !firstTap {
             tapToStartNode.removeFromParent()

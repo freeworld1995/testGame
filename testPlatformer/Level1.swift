@@ -24,13 +24,13 @@ class Level1: Scene, SKPhysicsContactDelegate {
         print("GameScene deinited")
     }
     
-//    override init(size: CGSize) {
-//        super.init(size: size)
-//    }
-//    
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//    }
+    //    override init(size: CGSize) {
+    //        super.init(size: size)
+    //    }
+    //
+    //    required init?(coder aDecoder: NSCoder) {
+    //        super.init(coder: aDecoder)
+    //    }
     
     override func didMove(to view: SKView) {
         
@@ -47,16 +47,24 @@ class Level1: Scene, SKPhysicsContactDelegate {
         arrayAddChangeColor.append(addChangeColorLeft)
         arrayAddChangeColor.append(addChangeColorRight)
         configPlayer()
+        addNextButton()
         spawnEnemy()
-
+        
         addChangeColorTimer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(addChangeColor), userInfo: nil, repeats: true)
-//
+        //
         //        let pauseMenu = SKSpriteNode(color: UIColor.black, size: self.frame.size)
         //        pauseMenu.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
         //        pauseMenu.alpha = 0.4
         //        pauseMenu.zPosition = 5
         //        addChild(pauseMenu)
         
+    }
+    
+    func addNextButton() {
+        let nextButton = SKSpriteNode(imageNamed: "next")
+        nextButton.name = "next"
+        nextButton.position = CGPoint(x: self.size.width * 0.9, y: self.size.height * 0.9)
+        addChild(nextButton)
     }
     
     func configPlayer() -> Void {
@@ -94,7 +102,7 @@ class Level1: Scene, SKPhysicsContactDelegate {
     
     lazy var addChangeColorRight : () -> () = { [unowned self] in
         let changeColorController = ChangeColorController(color: UIColor.randColor())
-      
+        
         let randPosY = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.height.convertToInt / 5, highestValue: self.size.height.convertToInt * 9 / 10)
         changeColorController.config(position: CGPoint(x: self.size.width.convertToInt, y: randPosY.nextInt()), parent: self, shootAction: nil, moveAction: nil)
         changeColorController.view.physicsBody?.velocity = CGVector.goLeft(velocity: 500)
@@ -207,7 +215,7 @@ class Level1: Scene, SKPhysicsContactDelegate {
                 otherView.removeFromParent()
                 for enemy in self.arrayExstingEnemies {
                     enemy.timer.invalidate()
-//                    enemy.view.removeFromParent()
+                    //                    enemy.view.removeFromParent()
                 }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -228,11 +236,11 @@ class Level1: Scene, SKPhysicsContactDelegate {
         let currentLevel = defaults.integer(forKey: "currentlevel")
         print(currentLevel)
         // load scene with the "currentLevel"
-//        let newGameScene = SKScene(fileNamed: "Level\(currentLevel)")
+        //        let newGameScene = SKScene(fileNamed: "Level\(currentLevel)")
         let newGameScene = Level1(size: self.frame.size)
         newGameScene.size = self.frame.size
         newGameScene.scaleMode = .aspectFill
-
+        
         self.view!.presentScene(newGameScene)
         
     }
@@ -279,8 +287,24 @@ class Level1: Scene, SKPhysicsContactDelegate {
         playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: -500)
     }
     
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        replay()
-//    }
-    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch: AnyObject in touches {
+            let touchePos = touch.location(in: self)
+            let tappedNode = atPoint(touchePos)
+            let nameOfTappedNode = tappedNode.name
+            
+            // check if we click on something that don't have a 'NAME'
+            guard nameOfTappedNode != nil else {return}
+            
+            if nameOfTappedNode == "next" {
+                for enemy in self.arrayExstingEnemies {
+                    enemy.timer.invalidate()
+                }
+
+                let newGameScene = Level2(size: self.frame.size)
+                newGameScene.scaleMode = .aspectFill
+                self.view!.presentScene(newGameScene)
+            }
+        }
+    }
 }

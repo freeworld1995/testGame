@@ -44,6 +44,7 @@ class Level3: Scene, SKPhysicsContactDelegate {
         arrayPolygonEnemy.append(addEnemyTop)
         arrayPolygonEnemy.append(addEnemyLeft)
         arrayPolygonEnemy.append(addEnemyRight)
+        addNextButton()
         configPlayer()
         spawnTriangle()
         
@@ -57,6 +58,13 @@ class Level3: Scene, SKPhysicsContactDelegate {
         //        pauseMenu.zPosition = 5
         //        addChild(pauseMenu)
         
+    }
+    
+    func addNextButton() {
+        let nextButton = SKSpriteNode(imageNamed: "next")
+        nextButton.name = "next"
+        nextButton.position = CGPoint(x: self.size.width * 0.9, y: self.size.height * 0.9)
+        addChild(nextButton)
     }
     
     func configPlayer() -> Void {
@@ -246,8 +254,20 @@ class Level3: Scene, SKPhysicsContactDelegate {
         playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: -500)
     }
     
-    //    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    //        replay()
-    //    }
-    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch: AnyObject in touches {
+            let touchePos = touch.location(in: self)
+            let tappedNode = atPoint(touchePos)
+            let nameOfTappedNode = tappedNode.name
+            
+            // check if we click on something that don't have a 'NAME'
+            guard nameOfTappedNode != nil else {return}
+            
+            if nameOfTappedNode == "next" {
+                let newGameScene = Level4(size: self.frame.size)
+                newGameScene.scaleMode = .aspectFill
+                self.view!.presentScene(newGameScene)
+            }
+        }
+    }
 }
