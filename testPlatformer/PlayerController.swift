@@ -94,6 +94,10 @@ class PlayerController: Controller {
                 }
             }
             
+            if otherView.physicsBody?.categoryBitMask == BitMask.ENEMY && otherView.fillColor != self.view.fillColor{
+                self.view.removeFromParent()
+            
+            }
             if otherView.physicsBody?.categoryBitMask == BitMask.WALL_FOR_PLAYER {
                 self.parent.makeCameraShake!()
             }

@@ -64,6 +64,13 @@ class Shape {
     
     }
     
+    static func getDoraemonBagPath()->CGPath{
+        
+       let doraemonBagPath = UIBezierPath(rect: CGRect(x: -243, y: -17, width: 485, height: 33))
+        return doraemonBagPath.cgPath
+    
+    }
+    
     static func getOvalPath() -> CGPath {
         let ovalPath = UIBezierPath(ovalIn: CGRect(x: -38, y: -38, width: 75, height: 75))
         return ovalPath.cgPath
