@@ -138,7 +138,7 @@ class Level4: Scene, SKPhysicsContactDelegate{
         background.handleContact = { [unowned self] otherView in
             if otherView.physicsBody?.categoryBitMask == BitMask.PLAYER {
                 otherView.removeFromParent()
-                self.spawnTriangle.invalidate()
+                //self.spawnTriangle.invalidate()
                 let pauseMenu = SKSpriteNode(color: cBACKGROUND, size: self.frame.size)
                 pauseMenu.position = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height/2)
                 pauseMenu.alpha = 0.05

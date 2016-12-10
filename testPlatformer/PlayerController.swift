@@ -15,6 +15,7 @@ class PlayerController: Controller {
     var border: SKShapeNode!
     var didDestroyEnemy: DidDestroyEnemyType?
     var explosion : AVAudioPlayer!
+    var hp = 2
     init() {
         super.init(view: View(path: Shape.getRectanglePath()), color: cBLUE)
         
@@ -103,9 +104,21 @@ class PlayerController: Controller {
             }
             
             if otherView.physicsBody?.categoryBitMask == BitMask.ANOTHER_WALL {
-                print(otherView.name)
+              //  print(otherView.name)
                 let velocity = self.view.physicsBody!.velocity
                 self.view.physicsBody?.velocity = CGVector(dx: -velocity.dx, dy: -velocity.dy)
+            }
+            if otherView.physicsBody?.categoryBitMask == BitMask.ENEMY_MUTILLIVES && otherView.fillColor == self.view.fillColor {
+                
+                if self.hp == 0{
+                    otherView.removeFromParent()
+                }
+                self.hp-=1
+            }
+            
+            if otherView.physicsBody?.categoryBitMask == BitMask.ENEMY_MUTILLIVES && otherView.fillColor != self.view.fillColor{
+                let velocity = self.view.physicsBody!.velocity
+                self.view.physicsBody?.velocity = CGVector(dx: -velocity.dx , dy: -velocity.dy)
             }
             
             if otherView.physicsBody?.categoryBitMask == BitMask.CHANGE_COLOR {
