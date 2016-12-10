@@ -65,7 +65,7 @@ class PlayerController: Controller {
         view.physicsBody?.linearDamping = 0
         view.physicsBody?.angularDamping = 0
         view.physicsBody?.categoryBitMask = BitMask.PLAYER
-        view.physicsBody?.contactTestBitMask = BitMask.ENEMY | BitMask.CHANGE_COLOR | BitMask.WALL_FOR_PLAYER
+        view.physicsBody?.contactTestBitMask = BitMask.ENEMY | BitMask.CHANGE_COLOR | BitMask.WALL_FOR_PLAYER | BitMask.ANOTHER_WALL
         view.physicsBody?.collisionBitMask = 0
         view.zPosition = 1
         view.name = "player"
@@ -95,11 +95,17 @@ class PlayerController: Controller {
             }
             
             if otherView.physicsBody?.categoryBitMask == BitMask.ENEMY && otherView.fillColor != self.view.fillColor{
-                self.view.removeFromParent()
+                //self.view.removeFromParent()
             
             }
             if otherView.physicsBody?.categoryBitMask == BitMask.WALL_FOR_PLAYER {
                 self.parent.makeCameraShake!()
+            }
+            
+            if otherView.physicsBody?.categoryBitMask == BitMask.ANOTHER_WALL {
+                print(otherView.name)
+                let velocity = self.view.physicsBody!.velocity
+                self.view.physicsBody?.velocity = CGVector(dx: -velocity.dx, dy: -velocity.dy)
             }
             
             if otherView.physicsBody?.categoryBitMask == BitMask.CHANGE_COLOR {

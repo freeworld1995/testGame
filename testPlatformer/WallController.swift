@@ -10,12 +10,12 @@ import SpriteKit
 import GameplayKit
 import UIKit
 
-class ChangeColorController: Controller {
-
+class WallController: Controller {
+    
     var arrayColor: [UIColor] = [cRED, cGREEN, cBLUE]
     
     init(color: UIColor) {
-        super.init(view: View(path: Shape.getTrianglePath()), color: color)
+        super.init(view: View(path: Shape.getDoraemonBagPath()), color: color)
     }
     
     deinit {
@@ -27,20 +27,6 @@ class ChangeColorController: Controller {
         configPhysics()
     }
     
-    func randColor() {
-        arrayColor = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: arrayColor) as! [UIColor]
-        
-        view.fillColor = arrayColor[0]
-    }
-    
-    func selfDestroy() {
-        let destroy = SKAction.run { [unowned self] in 
-            self.view.removeFromParent()
-        }
-        
-        view.run(.sequence([.wait(forDuration: 2), destroy]))
-
-    }
     
     func configPhysics() {
         view.physicsBody = SKPhysicsBody(polygonFrom: view.path!)
@@ -48,17 +34,17 @@ class ChangeColorController: Controller {
         view.physicsBody?.affectedByGravity = true
         view.physicsBody?.linearDamping = 0
         view.physicsBody?.angularDamping = 0
-        view.physicsBody?.categoryBitMask = BitMask.CHANGE_COLOR
+        view.physicsBody?.categoryBitMask = BitMask.ANOTHER_WALL
         view.physicsBody?.contactTestBitMask = BitMask.PLAYER
         view.physicsBody?.collisionBitMask = 0
         view.zPosition = 1
-        view.name = "ChangeColorObject"
+        view.name = "Another WALL"
         
-//        view.handleContact = { [unowned self] otherView in
-//            if otherView.physicsBody?.categoryBitMask == BitMask.PLAYER {
-//                self.view.removeFromParent()
-//            }
-//        }
+        //        view.handleContact = { [unowned self] otherView in
+        //            if otherView.physicsBody?.categoryBitMask == BitMask.PLAYER {
+        //                self.view.removeFromParent()
+        //            }
+        //        }
     }
     
 }

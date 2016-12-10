@@ -25,6 +25,8 @@
 		BF7EE0981DFB499700D217C9 /* Level3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EE0971DFB499700D217C9 /* Level3.swift */; };
 		BF7EE09B1DFB5BBC00D217C9 /* ping1.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF7EE09A1DFB5BBC00D217C9 /* ping1.wav */; };
 		BF7EE09D1DFB5C0300D217C9 /* ultraflow.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF7EE09C1DFB5C0300D217C9 /* ultraflow.wav */; };
+		BF7EE0A11DFBC00600D217C9 /* Level5.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EE0A01DFBC00600D217C9 /* Level5.swift */; };
+		BF7EE0A31DFBC26F00D217C9 /* WallController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EE0A21DFBC26F00D217C9 /* WallController.swift */; };
 		BFB1F3591DE49C8600EEA0E1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F3581DE49C8600EEA0E1 /* Constants.swift */; };
 		BFB1F35B1DE49FA000EEA0E1 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F35A1DE49FA000EEA0E1 /* Color.swift */; };
 		BFB1F35D1DE4A5D200EEA0E1 /* EnemyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F35C1DE4A5D200EEA0E1 /* EnemyController.swift */; };
@@ -62,6 +64,8 @@
 		BF7EE0971DFB499700D217C9 /* Level3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level3.swift; sourceTree = "<group>"; };
 		BF7EE09A1DFB5BBC00D217C9 /* ping1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ping1.wav; sourceTree = "<group>"; };
 		BF7EE09C1DFB5C0300D217C9 /* ultraflow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ultraflow.wav; sourceTree = "<group>"; };
+		BF7EE0A01DFBC00600D217C9 /* Level5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level5.swift; sourceTree = "<group>"; };
+		BF7EE0A21DFBC26F00D217C9 /* WallController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WallController.swift; sourceTree = "<group>"; };
 		BFB1F3581DE49C8600EEA0E1 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BFB1F35A1DE49FA000EEA0E1 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		BFB1F35C1DE4A5D200EEA0E1 /* EnemyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyController.swift; sourceTree = "<group>"; };
@@ -110,6 +114,7 @@
 				BFE6BB0D1DE3F74E00E362C5 /* Level2.swift */,
 				BF7EE0971DFB499700D217C9 /* Level3.swift */,
 				69C90C5D1DFB526F0036ADEE /* Level4.swift */,
+				BF7EE0A01DFBC00600D217C9 /* Level5.swift */,
 				693514A71DFBB23200155368 /* Level6.swift */,
 				BFDF1FD91DF9A4C1004BC259 /* Menu.swift */,
 			);
@@ -149,6 +154,7 @@
 				BF17870E1DE4057B00BF12CE /* Controller.swift */,
 				BF1787121DE4071100BF12CE /* PlayerController.swift */,
 				BF1787101DE4059000BF12CE /* View.swift */,
+				BF7EE0A21DFBC26F00D217C9 /* WallController.swift */,
 				BFB1F35C1DE4A5D200EEA0E1 /* EnemyController.swift */,
 				BF2A985C1DEA872500BC60B2 /* ExplosionController.swift */,
 				BFB1F3581DE49C8600EEA0E1 /* Constants.swift */,
@@ -262,12 +268,14 @@
 				BFD857C31DFADD2900C88B02 /* Scene.swift in Sources */,
 				BFB1F3591DE49C8600EEA0E1 /* Constants.swift in Sources */,
 				BFDF099F1DE80C90004226DB /* Shape.swift in Sources */,
+				BF7EE0A11DFBC00600D217C9 /* Level5.swift in Sources */,
 				BFB1F35B1DE49FA000EEA0E1 /* Color.swift in Sources */,
 				BFE6BB081DE3F74E00E362C5 /* AppDelegate.swift in Sources */,
 				BFB1F35D1DE4A5D200EEA0E1 /* EnemyController.swift in Sources */,
 				BFDF1FDA1DF9A4C1004BC259 /* Menu.swift in Sources */,
 				69C90C5E1DFB526F0036ADEE /* Level4.swift in Sources */,
 				BFDF09A11DE80E50004226DB /* ChangeColorController.swift in Sources */,
+				BF7EE0A31DFBC26F00D217C9 /* WallController.swift in Sources */,
 				BF17870F1DE4057B00BF12CE /* Controller.swift in Sources */,
 				BF2A98471DE9DF0300BC60B2 /* Utils.swift in Sources */,
 				BF7EE0981DFB499700D217C9 /* Level3.swift in Sources */,

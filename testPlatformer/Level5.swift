@@ -10,13 +10,11 @@ import SpriteKit
 import GameplayKit
 import AVFoundation
 
-class Level6: Scene, SKPhysicsContactDelegate {
+class Level5: Scene, SKPhysicsContactDelegate {
     
     let playerController = PlayerController()
     var cameraNode: SKCameraNode!
     var arrayPolygonEnemy: [() -> ()] = []
-    var addEnemyTimer: Timer!
-    var addChangeColor: Timer!
     var addDoraemonBagColor: Timer!
     var background: View!
     
@@ -40,11 +38,11 @@ class Level6: Scene, SKPhysicsContactDelegate {
             self.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.size.width / 2, y: self.size.height / 2), duration: 0.4, amplitudeX: 14, amplitudeY: 9))
         }
         
-//        makeChangeColor = { [unowned self] in
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
-//                self.spawnTriangle()
-//            }
-//        }
+//                makeChangeColor = { [unowned self] in
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
+//                        self.spawnTriangle()
+//                    }
+//                }
         
         addBackground()
         addPhysics()
@@ -58,11 +56,30 @@ class Level6: Scene, SKPhysicsContactDelegate {
         configPlayer()
         backGroundMusic()
         
-        addEnemyTimer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(addEnemy), userInfo: nil, repeats: true)
+        let addEnemyToScene = SKAction.run { [unowned self] in
+            self.addEnemy()
+        }
         
-        addChangeColor = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(spawnTriangle), userInfo: nil, repeats: true)
+        let addEnemySequence = SKAction.sequence([addEnemyToScene, .wait(forDuration: 3)])
+        
+        self.run(.repeatForever(addEnemySequence))
+        
+        let addChangeColorToScene = SKAction.run {
+            self.spawnTriangle()
+        }
+        
+        let addChangeColorSequence = SKAction.sequence([addChangeColorToScene, .wait(forDuration: 2.5)])
+        
+        self.run(.repeatForever(addChangeColorSequence))
+        
+//        
+//        addEnemyTimer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(addEnemy), userInfo: nil, repeats: true)
+        
+//        addChangeColor = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(spawnTriangle), userInfo: nil, repeats: true)
         
         addDoraemonBagColor = Timer.scheduledTimer(timeInterval: 7, target: self, selector: #selector(spawnDoraemonBag), userInfo: nil, repeats: true)
+        makeWall()
+   
         
         //        let pauseMenu = SKSpriteNode(color: UIColor.black, size: self.frame.size)
         //        pauseMenu.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
@@ -70,6 +87,11 @@ class Level6: Scene, SKPhysicsContactDelegate {
         //        pauseMenu.zPosition = 5
         //        addChild(pauseMenu)
         
+    }
+    
+    func makeWall() {
+        let fuck = WallController(color: UIColor.randColor())
+        fuck.config(position: CGPoint(x: 400, y: 500), parent: self, shootAction: nil, moveAction: nil)
     }
     
     
@@ -119,7 +141,7 @@ class Level6: Scene, SKPhysicsContactDelegate {
     }
     
     lazy var addEnemyLeft : () -> () = { [unowned self] in
-        let PolygonEnemyController = EnemyController(shape: Shape.getPolygonPath(), color: cRED)
+        let PolygonEnemyController = EnemyController(shape: Shape.getPolygonPath(), color: UIColor.randColor())
         
         let randPosY = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.height.convertToInt / 5, highestValue: self.size.height.convertToInt * 9 / 10)
         PolygonEnemyController.config(position: CGPoint(x: 0, y: randPosY.nextInt()), parent: self, shootAction: nil, moveAction: nil)
@@ -144,12 +166,12 @@ class Level6: Scene, SKPhysicsContactDelegate {
         let doraemonBagController = WallController(color: UIColor.randColor())
         doraemonBagController.config(position: doraemonBagPosition, parent: self, shootAction: nil, moveAction: nil)
         //            triangleController.selfDestroy()
-        let destroy = SKAction.run {
-            doraemonBagController.view.removeFromParent()
-        }
-        
-        doraemonBagController.view.run(.sequence([.wait(forDuration: 3.2), destroy]))
-        
+//        let destroy = SKAction.run {
+//            doraemonBagController.view.removeFromParent()
+//        }
+//        
+//        doraemonBagController.view.run(.sequence([.wait(forDuration: 3.2), destroy]))
+//        
         //            enemyController.activateAutoChangeColor()
         
     }
@@ -169,7 +191,7 @@ class Level6: Scene, SKPhysicsContactDelegate {
         }
         
         triangleController.view.run(.sequence([.wait(forDuration: 3.2), destroy]))
-        
+//
         //            enemyController.activateAutoChangeColor()
         
     }
@@ -245,7 +267,7 @@ class Level6: Scene, SKPhysicsContactDelegate {
     }
     
     func replay() {
-        self.addEnemyTimer.invalidate()
+//        self.addEnemyTimer.invalidate()
         //        self.addChangeColor.invalidate()
         // Access UserDefaults
         let defaults = UserDefaults.standard
@@ -254,7 +276,7 @@ class Level6: Scene, SKPhysicsContactDelegate {
         let currentLevel = defaults.integer(forKey: "currentlevel")
         print(currentLevel)
         // load scene with the "currentLevel"
-        let newGameScene = Level6(size: self.frame.size)
+        let newGameScene = Level5(size: self.frame.size)
         newGameScene.size = self.frame.size
         newGameScene.scaleMode = .aspectFill
         
@@ -314,7 +336,7 @@ class Level6: Scene, SKPhysicsContactDelegate {
             guard nameOfTappedNode != nil else {return}
             
             if nameOfTappedNode == "next" {
-                let newGameScene = Level4(size: self.frame.size)
+                let newGameScene = Level5(size: self.frame.size)
                 newGameScene.scaleMode = .aspectFill
                 self.view!.presentScene(newGameScene)
             }
