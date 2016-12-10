@@ -16,3 +16,9 @@ struct BitMask {
     static let WALL_FOR_PLAYER = UInt32(1 << 5)
 }
 
+struct Speed {
+    static let PLAYER = 435
+    static let ENEMY = 375
+    static let CHANGECOLOR = 335
+}
+

@@ -42,7 +42,6 @@ class GameOver: SKScene {
 //        let reveal = SKTransition.fade(withDuration: 0.5)
 //        let gameScene = GameScene(size: self.frame.size)
 //        gameScene.view?.presentScene(gameScene, transition: reveal)
-        let touch = touches.first
 //        if let location = touch?.location(in: self){
 //            let node = self.nodes(at: location)
 //            

@@ -102,6 +102,7 @@ class PlayerController: Controller {
                 otherView.removeFromParent()
                 self.border.fillColor = otherView.fillColor
                 self.view.fillColor = otherView.fillColor
+                self.parent.makeChangeColor?()
             }
         }
         

@@ -12,6 +12,7 @@ import UIKit
 import AVFoundation
 
 class Level4: Scene, SKPhysicsContactDelegate{
+    
     var spawnTriangle : Timer!
     let playerController = PlayerController()
     var cameraNode: SKCameraNode!
@@ -24,6 +25,9 @@ class Level4: Scene, SKPhysicsContactDelegate{
         makeCameraShake = { [unowned self] in
             self.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.size.width / 2, y: self.size.height / 2), duration: 0.4, amplitudeX: 14, amplitudeY: 9))
         }
+        
+
+        
         addBackground()
         addPhysics()
         addGestureRecognizer(to: view)
@@ -42,11 +46,7 @@ class Level4: Scene, SKPhysicsContactDelegate{
         enemyControllerCycle.view.run(SKAction.repeatForever(SKAction.follow(kindaCyclePath.cgPath, asOffset: false, orientToPath: true, speed: 300)))
         enemyControllerCycle.config(position: CGPoint(x:77, y: 24.81)  , parent: self, shootAction: nil, moveAction: nil)
         
-        spawnTriangle = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(addChangColorController), userInfo: nil, repeats: true)
-        //
-        //        Timer.scheduledTimer(timeInterval: 15, target: self, selector: #selector(activateAutoChangeColor), userInfo: nil, repeats: true)
-        
-        //        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(randColor), userInfo: nil, repeats: true)
+//        spawnTriangle = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(addChangColorController), userInfo: nil, repeats: true)
     }
     
     //    override func update(_ currentTime: TimeInterval) {
@@ -72,7 +72,6 @@ class Level4: Scene, SKPhysicsContactDelegate{
     
     func addChangColorController()  {
         let changeColorController = ChangeColorController(color: UIColor.randColor())
-        // changeColorController.view.physicsBody?.isDynamic = true
         let array = ["BLUE","GREEN","RED"]
         changeColorController.view.fillColor = UIColor.fromString(name: array.random3Colors())
         let changeColorControllerPosition = CGPoint(x: random(min: self.size.width * 0.1, max: self.size.width * 0.9) , y: self.size.height)
@@ -201,23 +200,19 @@ class Level4: Scene, SKPhysicsContactDelegate{
     }
     
     func swipedRight(sender:UISwipeGestureRecognizer){
-        //        print("swiped right")
-        playerController.view.physicsBody?.velocity = CGVector(dx: 500, dy: 0)
+        playerController.view.physicsBody?.velocity = CGVector(dx: Speed.PLAYER, dy: 0)
     }
     
     func swipedLeft(sender:UISwipeGestureRecognizer){
-        //        print("swiped left")
-        playerController.view.physicsBody?.velocity = CGVector(dx: -500, dy: 0)
+        playerController.view.physicsBody?.velocity = CGVector(dx: -Speed.PLAYER, dy: 0)
     }
     
     func swipedUp(sender:UISwipeGestureRecognizer){
-        //        print("swiped up")
-        playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: 500)
+        playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: Speed.PLAYER)
     }
     
     func swipedDown(sender:UISwipeGestureRecognizer){
-        //        print("swiped down")
-        playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: -500)
+        playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: -Speed.PLAYER)
     }
     
     func random_Int(min : Int, max : Int) -> Int {

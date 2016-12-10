@@ -37,6 +37,12 @@ class Level3: Scene, SKPhysicsContactDelegate {
             self.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.size.width / 2, y: self.size.height / 2), duration: 0.4, amplitudeX: 14, amplitudeY: 9))
         }
         
+        makeChangeColor = { [unowned self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
+                self.spawnTriangle()
+            }
+        }
+        
         addBackground()
         addPhysics()
         addGestureRecognizer(to: view)
@@ -104,7 +110,7 @@ class Level3: Scene, SKPhysicsContactDelegate {
         
         let randPosX = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.width.convertToInt / 5, highestValue: self.size.width.convertToInt * 9 / 10)
         PolygonEnemyController.config(position: CGPoint(x: randPosX.nextInt(), y: self.size.height.convertToInt), parent: self, shootAction: nil, moveAction: nil)
-        PolygonEnemyController.view.physicsBody?.velocity = CGVector.goDown(velocity: 500)
+        PolygonEnemyController.view.physicsBody?.velocity = CGVector.goDown(velocity: Speed.CHANGECOLOR)
     }
     
     lazy var addEnemyLeft : () -> () = { [unowned self] in
@@ -112,7 +118,7 @@ class Level3: Scene, SKPhysicsContactDelegate {
         
         let randPosY = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.height.convertToInt / 5, highestValue: self.size.height.convertToInt * 9 / 10)
         PolygonEnemyController.config(position: CGPoint(x: 0, y: randPosY.nextInt()), parent: self, shootAction: nil, moveAction: nil)
-        PolygonEnemyController.view.physicsBody?.velocity = CGVector.goRight(velocity: 500)
+        PolygonEnemyController.view.physicsBody?.velocity = CGVector.goRight(velocity: Speed.CHANGECOLOR)
     }
     
     lazy var addEnemyRight : () -> () = { [unowned self] in
@@ -120,32 +126,32 @@ class Level3: Scene, SKPhysicsContactDelegate {
         
         let randPosY = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.height.convertToInt / 5, highestValue: self.size.height.convertToInt * 9 / 10)
         PolygonEnemyController.config(position: CGPoint(x: self.size.width.convertToInt, y: randPosY.nextInt()), parent: self, shootAction: nil, moveAction: nil)
-        PolygonEnemyController.view.physicsBody?.velocity = CGVector.goLeft(velocity: 500)
+        PolygonEnemyController.view.physicsBody?.velocity = CGVector.goLeft(velocity: Speed.CHANGECOLOR)
     }
     
     func spawnTriangle() {
-
-            let randPosX = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.width.convertToInt / 5, highestValue: self.size.width.convertToInt * 9 / 10)
-            let randPosY = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.height.convertToInt / 5, highestValue: self.size.height.convertToInt * 9 / 10)
-            
-            let trianglePosition = CGPoint(x: randPosX.nextInt(), y: randPosY.nextInt())
-            
-            let triangleController = ChangeColorController(color: UIColor.randColor())
-            triangleController.config(position: trianglePosition, parent: self, shootAction: nil, moveAction: nil)
-//            triangleController.selfDestroy()
-        let destroy = SKAction.run { [unowned self] in
+        
+        let randPosX = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.width.convertToInt / 5, highestValue: self.size.width.convertToInt * 9 / 10)
+        let randPosY = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.height.convertToInt / 5, highestValue: self.size.height.convertToInt * 9 / 10)
+        
+        let trianglePosition = CGPoint(x: randPosX.nextInt(), y: randPosY.nextInt())
+        
+        let triangleController = ChangeColorController(color: UIColor.randColor())
+        triangleController.config(position: trianglePosition, parent: self, shootAction: nil, moveAction: nil)
+        //            triangleController.selfDestroy()
+        let destroy = SKAction.run { 
             triangleController.view.removeFromParent()
         }
         
-        triangleController.view.run(.sequence([.wait(forDuration: 3.5), destroy]))
-
-                        //            enemyController.activateAutoChangeColor()
+        triangleController.view.run(.sequence([.wait(forDuration: 3.2), destroy]))
+        
+        //            enemyController.activateAutoChangeColor()
         
     }
     
     override func update(_ currentTime: TimeInterval) {
         //       cameraNode.position = playerController.position
-
+        
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -199,12 +205,13 @@ class Level3: Scene, SKPhysicsContactDelegate {
         background.handleContact = { [unowned self] otherView in
             if otherView.physicsBody?.categoryBitMask == BitMask.PLAYER {
                 //                background.contacted = true
-                ExplosionController.makeShatter(position: self.playerController.position, parent: self)
+                //                ExplosionController.makeShatter(position: self.playerController.position, parent: self)
                 otherView.removeFromParent()
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                    self.replay()
-                }
+                //
+                //                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                //                    self.replay()
+                //                }
+                self.replay()
             }
         }
         addChild(background)
@@ -212,7 +219,7 @@ class Level3: Scene, SKPhysicsContactDelegate {
     
     func replay() {
         self.addEnemyTimer.invalidate()
-        self.addChangeColor.invalidate()
+//        self.addChangeColor.invalidate()
         // Access UserDefaults
         let defaults = UserDefaults.standard
         
@@ -255,19 +262,19 @@ class Level3: Scene, SKPhysicsContactDelegate {
     }
     
     func swipedRight(sender:UISwipeGestureRecognizer){
-        playerController.view.physicsBody?.velocity = CGVector(dx: 500, dy: 0)
+        playerController.view.physicsBody?.velocity = CGVector(dx: Speed.PLAYER, dy: 0)
     }
     
     func swipedLeft(sender:UISwipeGestureRecognizer){
-        playerController.view.physicsBody?.velocity = CGVector(dx: -500, dy: 0)
+        playerController.view.physicsBody?.velocity = CGVector(dx: -Speed.PLAYER, dy: 0)
     }
     
     func swipedUp(sender:UISwipeGestureRecognizer){
-        playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: 500)
+        playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: Speed.PLAYER)
     }
     
     func swipedDown(sender:UISwipeGestureRecognizer){
-        playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: -500)
+        playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: -Speed.PLAYER)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

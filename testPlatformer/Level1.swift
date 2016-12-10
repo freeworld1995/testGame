@@ -106,15 +106,16 @@ class Level1: Scene, SKPhysicsContactDelegate {
         
         let randPosX = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.width.convertToInt / 5, highestValue: self.size.width.convertToInt * 9 / 10)
         changeColorController.config(position: CGPoint(x: randPosX.nextInt(), y: self.size.height.convertToInt), parent: self, shootAction: nil, moveAction: nil)
-        changeColorController.view.physicsBody?.velocity = CGVector.goDown(velocity: 500)
+        
+        changeColorController.view.physicsBody?.velocity = CGVector.goDown(velocity: Speed.CHANGECOLOR)
     }
-    
+
     lazy var addChangeColorLeft : () -> () = { [unowned self] in
         let changeColorController = ChangeColorController(color: UIColor.randColor())
         
         let randPosY = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.height.convertToInt / 5, highestValue: self.size.height.convertToInt * 9 / 10)
         changeColorController.config(position: CGPoint(x: 0, y: randPosY.nextInt()), parent: self, shootAction: nil, moveAction: nil)
-        changeColorController.view.physicsBody?.velocity = CGVector.goRight(velocity: 500)
+        changeColorController.view.physicsBody?.velocity = CGVector.goRight(velocity: Speed.CHANGECOLOR)
     }
     
     lazy var addChangeColorRight : () -> () = { [unowned self] in
@@ -122,7 +123,7 @@ class Level1: Scene, SKPhysicsContactDelegate {
         
         let randPosY = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.height.convertToInt / 5, highestValue: self.size.height.convertToInt * 9 / 10)
         changeColorController.config(position: CGPoint(x: self.size.width.convertToInt, y: randPosY.nextInt()), parent: self, shootAction: nil, moveAction: nil)
-        changeColorController.view.physicsBody?.velocity = CGVector.goLeft(velocity: 500)
+        changeColorController.view.physicsBody?.velocity = CGVector.goLeft(velocity: Speed.CHANGECOLOR)
     }
     
     func randomEnemyPosition() {
@@ -160,7 +161,7 @@ class Level1: Scene, SKPhysicsContactDelegate {
         randomEnemyPosition()
         
         for i in 1...3 {
-            let enemyController = EnemyController(shape: Shape.getTrianglePath() , color: cRED)
+            let enemyController = EnemyController(shape: Shape.getStarPath() , color: cRED)
             enemyController.config(position: arrayEnemyPosition[i - 1], parent: self, shootAction: nil, moveAction: nil)
             enemyController.activateAutoChangeColor()
             arrayExstingEnemies.append(enemyController)
@@ -228,16 +229,17 @@ class Level1: Scene, SKPhysicsContactDelegate {
         background.handleContact = { [unowned self] otherView in
             if otherView.physicsBody?.categoryBitMask == BitMask.PLAYER {
                 //                background.contacted = true
-                ExplosionController.makeShatter(position: self.playerController.position, parent: self)
+//                ExplosionController.makeShatter(position: self.playerController.position, parent: self)
                 otherView.removeFromParent()
                 for enemy in self.arrayExstingEnemies {
                     enemy.timer.invalidate()
                     //                    enemy.view.removeFromParent()
                 }
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    self.replay()
-                }
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) { [unowned self] in
+//                    self.replay()
+//                }
+                self.replay()
             }
         }
         addChild(background)
@@ -291,19 +293,19 @@ class Level1: Scene, SKPhysicsContactDelegate {
     }
     
     func swipedRight(sender:UISwipeGestureRecognizer){
-        playerController.view.physicsBody?.velocity = CGVector(dx: 500, dy: 0)
+        playerController.view.physicsBody?.velocity = CGVector(dx: Speed.PLAYER, dy: 0)
     }
     
     func swipedLeft(sender:UISwipeGestureRecognizer){
-        playerController.view.physicsBody?.velocity = CGVector(dx: -500, dy: 0)
+        playerController.view.physicsBody?.velocity = CGVector(dx: -Speed.PLAYER, dy: 0)
     }
     
     func swipedUp(sender:UISwipeGestureRecognizer){
-        playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: 500)
+        playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: Speed.PLAYER)
     }
     
     func swipedDown(sender:UISwipeGestureRecognizer){
-        playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: -500)
+        playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: -Speed.PLAYER)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

@@ -18,7 +18,7 @@ class Level2: Scene, SKPhysicsContactDelegate{
     let tapToStartNode = SKSpriteNode(imageNamed: "TapToStart")
     var changeColor : SKNode!
     var firstTap: Bool = false
-var player: AVAudioPlayer?
+    var player: AVAudioPlayer?
     
     override func didMove(to view: SKView) {
         makeCameraShake = { [unowned self] in
@@ -35,8 +35,8 @@ var player: AVAudioPlayer?
         backGroundMusic()
         
         tapToStartNode.position = CGPoint(x: self.size.width / 2 , y: 300)
-        
         addChild(tapToStartNode)
+        
         let enemyController1 = EnemyController(shape: Shape.getStarPath(), color: cRED)
         enemyController1.view.fillColor = cRED
         enemyController1.config(position: CGPoint(x: 700, y: 550), parent: self, shootAction: nil, moveAction: nil)
@@ -105,6 +105,12 @@ var player: AVAudioPlayer?
         
         changeColorController.config(position: changeColorControllerPosition , parent: self, shootAction: nil, moveAction: trianglePath)
         
+        let autoChangeColorAction = SKAction.run {
+            changeColorController.view.fillColor = UIColor.randColor()
+        }
+        let sequence = SKAction.sequence([.wait(forDuration: 2.4), autoChangeColorAction])
+        changeColorController.view.run(.repeatForever(sequence))
+        
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -166,10 +172,10 @@ var player: AVAudioPlayer?
                 pauseMenu.zPosition = 5
                 self.addChild(pauseMenu)
                 
-                            let sceneToMoveTo = Level2(size: self.size)
-                            sceneToMoveTo.scaleMode = self.scaleMode
-                            let sceneTransition = SKTransition.doorsOpenVertical(withDuration: 0.4)
-                            self.view!.presentScene(sceneToMoveTo, transition: sceneTransition)
+                let sceneToMoveTo = Level2(size: self.size)
+                sceneToMoveTo.scaleMode = self.scaleMode
+                let sceneTransition = SKTransition.doorsOpenVertical(withDuration: 0.4)
+                self.view!.presentScene(sceneToMoveTo, transition: sceneTransition)
                 
                 //                ExplosionController.makeShatter(position: self.playerController.position, parent: self)
                 //                self.physicsWorld.speed = 0.3
@@ -206,23 +212,19 @@ var player: AVAudioPlayer?
     }
     
     func swipedRight(sender:UISwipeGestureRecognizer){
-        //        print("swiped right")
-        playerController.view.physicsBody?.velocity = CGVector(dx: 500, dy: 0)
+        playerController.view.physicsBody?.velocity = CGVector(dx: Speed.PLAYER, dy: 0)
     }
     
     func swipedLeft(sender:UISwipeGestureRecognizer){
-        //        print("swiped left")
-        playerController.view.physicsBody?.velocity = CGVector(dx: -500, dy: 0)
+        playerController.view.physicsBody?.velocity = CGVector(dx: -Speed.PLAYER, dy: 0)
     }
     
     func swipedUp(sender:UISwipeGestureRecognizer){
-        //        print("swiped up")
-        playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: 500)
+        playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: Speed.PLAYER)
     }
     
     func swipedDown(sender:UISwipeGestureRecognizer){
-        //        print("swiped down")
-        playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: -500)
+        playerController.view.physicsBody?.velocity = CGVector(dx: 0, dy: -Speed.PLAYER)
     }
     
     func random_Int(min : Int, max : Int) -> Int {

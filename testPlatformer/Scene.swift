@@ -9,7 +9,9 @@
 import SpriteKit
 
 typealias ShakeSceneCamera = () -> ()
+typealias ChangeColorType = () -> ()
 
 class Scene: SKScene {
     var makeCameraShake: ShakeSceneCamera?
+    var makeChangeColor: ChangeColorType?
 }
