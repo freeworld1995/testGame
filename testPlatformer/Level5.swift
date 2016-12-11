@@ -103,6 +103,7 @@ class Level5: Scene, SKPhysicsContactDelegate {
             guard let player = player else { return }
             print("music")
             player.prepareToPlay()
+            player.numberOfLoops = -1
             player.play()
         } catch let error {
             print(error.localizedDescription)

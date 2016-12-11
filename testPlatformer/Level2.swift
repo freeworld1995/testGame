@@ -19,11 +19,21 @@ class Level2: Scene, SKPhysicsContactDelegate{
     var changeColor : SKNode!
     var firstTap: Bool = false
     var player: AVAudioPlayer?
+    var alreadyCalledReplay = false
+    
+    override init(size: CGSize) {
+        super.init(size: size)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     
     override func didMove(to view: SKView) {
         makeCameraShake = { [unowned self] in
             self.cameraNode.run(SKAction.shake(initialPosition: CGPoint(x: self.size.width / 2, y: self.size.height / 2), duration: 0.4, amplitudeX: 14, amplitudeY: 9))
         }
+        
         addBackground()
         addPhysics()
         addGestureRecognizer(to: view)
@@ -64,6 +74,7 @@ class Level2: Scene, SKPhysicsContactDelegate{
             guard let player = player else { return }
             print("music")
             player.prepareToPlay()
+            player.numberOfLoops = -1
             player.play()
         } catch let error {
             print(error.localizedDescription)
@@ -185,6 +196,34 @@ class Level2: Scene, SKPhysicsContactDelegate{
         addChild(background)
     }
     
+    func replay() {
+        spawnTriangle.invalidate()
+        
+        player?.stop()
+        
+        if alreadyCalledReplay != true {
+            alreadyCalledReplay = true
+            player?.stop()
+            // Access UserDefaults
+            let defaults = UserDefaults.standard
+            
+            // Get "currentLevel"
+            let currentLevel = defaults.integer(forKey: "currentlevel")
+            print(currentLevel)
+            // load scene with the "currentLevel"
+            let newGameScene = SKScene(fileNamed: "Level\(currentLevel)")
+            //        let newGameScene = Level1(size: self.frame.size)
+            newGameScene?.size = self.frame.size
+            newGameScene?.scaleMode = .aspectFill
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [unowned self] in
+                self.view?.presentScene(newGameScene)
+                self.removeAllChildren()
+                self.removeAllActions()
+            }
+        }
+    }
+    
     func addPhysics() {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         self.physicsWorld.contactDelegate = self
@@ -253,10 +292,17 @@ class Level2: Scene, SKPhysicsContactDelegate{
             guard nameOfTappedNode != nil else {return}
             
             if nameOfTappedNode == "next" {
-                spawnTriangle.invalidate()
-                let newGameScene = Level3(size: self.frame.size)
-                newGameScene.scaleMode = .aspectFill
-                self.view!.presentScene(newGameScene)
+                
+                let defaults = UserDefaults.standard
+                let currentLevel = defaults.integer(forKey: "currentlevel")
+                let newGameScene = SKScene(fileNamed: "Level\(currentLevel)")
+                newGameScene?.scaleMode = .aspectFill
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [unowned self] in
+                    self.view?.presentScene(newGameScene)
+                    self.removeAllChildren()
+                    self.removeAllActions()
+                }
             }
         }
     }

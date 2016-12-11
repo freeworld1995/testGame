@@ -25,6 +25,19 @@ class EnemyController: Controller {
         timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(randColor), userInfo: nil, repeats: true)
     }
     
+    func activate7Colors() {
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(rand7Colors), userInfo: nil, repeats: true)
+    }
+    
+    @objc func rand7Colors() {
+        var arrayColor: [UIColor] = [cRED, cGREEN, cGRAY, cBROWN, cSEA, cPINK, cPURPLE]
+        
+        arrayColor = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: arrayColor) as! [UIColor]
+        
+        view.fillColor = arrayColor[0]
+
+    }
+    
     var arrayColor: [UIColor] = [cRED, cGREEN, cBLUE]
     
     @objc func randColor() {

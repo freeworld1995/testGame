@@ -40,6 +40,11 @@ extension SKAction {
     
 }
 
+extension Int {
+    var degreesToRadians: Double { return Double(self) * .pi / 180 }
+    var radiansToDegrees: Double { return Double(self) * 180 / .pi }
+}
+
 extension CGFloat {
     var convertToInt: Int { return Int(self) }
 }

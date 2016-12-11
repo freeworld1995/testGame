@@ -16,7 +16,7 @@ class ExplosionController {
                 parent.addChild(shatter)
             }
             let wait = SKAction.wait(forDuration: 1.5)
-            let removeShatterFromNode = SKAction.run {
+            let removeShatterFromNode = SKAction.run { [unowned shatter] in
                 shatter.removeFromParent()
             }
             let sequence = SKAction.sequence([addShatterAction, wait, removeShatterFromNode])

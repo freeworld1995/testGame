@@ -61,7 +61,7 @@ class PlayerController: Controller {
         view.physicsBody = SKPhysicsBody(polygonFrom: view.path!)
         view.physicsBody?.usesPreciseCollisionDetection = true
         view.physicsBody?.isDynamic = true
-        view.physicsBody?.affectedByGravity = true
+        view.physicsBody?.affectedByGravity = false
         view.physicsBody?.linearDamping = 0
         view.physicsBody?.angularDamping = 0
         view.physicsBody?.categoryBitMask = BitMask.PLAYER
@@ -95,15 +95,18 @@ class PlayerController: Controller {
             }
             
             if otherView.physicsBody?.categoryBitMask == BitMask.ENEMY && otherView.fillColor != self.view.fillColor{
-                //self.view.removeFromParent()
+                otherView.removeFromParent()
+                ExplosionController.makeShatter(position: self.position, parent: self.parent)
+                self.view.removeFromParent()
+                self.parent.makeReplay?()
             
             }
             if otherView.physicsBody?.categoryBitMask == BitMask.WALL_FOR_PLAYER {
                 self.parent.makeCameraShake!()
+                ExplosionController.makeShatter(position: self.position, parent: self.parent)
             }
             
             if otherView.physicsBody?.categoryBitMask == BitMask.ANOTHER_WALL {
-                print(otherView.name)
                 let velocity = self.view.physicsBody!.velocity
                 self.view.physicsBody?.velocity = CGVector(dx: -velocity.dx, dy: -velocity.dy)
             }

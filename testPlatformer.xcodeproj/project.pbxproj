@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		69112EA51DEB26280081246A /* GameOverScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 69112EA31DEB26280081246A /* GameOverScene.sks */; };
 		69112EA61DEB26280081246A /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69112EA41DEB26280081246A /* GameOverScene.swift */; };
-		693514A81DFBB23200155368 /* Level6.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693514A71DFBB23200155368 /* Level6.swift */; };
 		6992493E1DF02FA100178B99 /* GameOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6992493D1DF02FA100178B99 /* GameOver.swift */; };
 		69C90C5E1DFB526F0036ADEE /* Level4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C90C5D1DFB526F0036ADEE /* Level4.swift */; };
+		BF12183A1DFC905E00685F05 /* ping6.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF1218391DFC905E00685F05 /* ping6.wav */; };
 		BF17870F1DE4057B00BF12CE /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF17870E1DE4057B00BF12CE /* Controller.swift */; };
 		BF1787111DE4059000BF12CE /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1787101DE4059000BF12CE /* View.swift */; };
 		BF1787131DE4071100BF12CE /* PlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1787121DE4071100BF12CE /* PlayerController.swift */; };
@@ -22,6 +22,9 @@
 		BF2A985B1DE9FB0C00BC60B2 /* Triangle@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF2A98581DE9FB0C00BC60B2 /* Triangle@3x.png */; };
 		BF2A985D1DEA872500BC60B2 /* ExplosionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2A985C1DEA872500BC60B2 /* ExplosionController.swift */; };
 		BF2A985F1DEA9AB100BC60B2 /* earthquake.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF2A985E1DEA9AB100BC60B2 /* earthquake.wav */; };
+		BF5590E41DFBE562001DC42D /* Level7.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5590E31DFBE562001DC42D /* Level7.swift */; };
+		BF5590E61DFBEDC5001DC42D /* SevenColorsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5590E51DFBEDC5001DC42D /* SevenColorsController.swift */; };
+		BF5590E81DFBF574001DC42D /* ProtectTriangleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5590E71DFBF574001DC42D /* ProtectTriangleController.swift */; };
 		BF7EE0981DFB499700D217C9 /* Level3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EE0971DFB499700D217C9 /* Level3.swift */; };
 		BF7EE09B1DFB5BBC00D217C9 /* ping1.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF7EE09A1DFB5BBC00D217C9 /* ping1.wav */; };
 		BF7EE09D1DFB5C0300D217C9 /* ultraflow.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF7EE09C1DFB5C0300D217C9 /* ultraflow.wav */; };
@@ -30,6 +33,12 @@
 		BFB1F3591DE49C8600EEA0E1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F3581DE49C8600EEA0E1 /* Constants.swift */; };
 		BFB1F35B1DE49FA000EEA0E1 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F35A1DE49FA000EEA0E1 /* Color.swift */; };
 		BFB1F35D1DE4A5D200EEA0E1 /* EnemyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F35C1DE4A5D200EEA0E1 /* EnemyController.swift */; };
+		BFC163011DFD049900E688AF /* Level2.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFC163001DFD049900E688AF /* Level2.sks */; };
+		BFC163031DFD04A100E688AF /* Level3.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFC163021DFD04A100E688AF /* Level3.sks */; };
+		BFC163051DFD04B000E688AF /* Level4.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFC163041DFD04B000E688AF /* Level4.sks */; };
+		BFC163071DFD04B800E688AF /* Level5.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFC163061DFD04B800E688AF /* Level5.sks */; };
+		BFC163091DFD04C200E688AF /* Level6.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFC163081DFD04C200E688AF /* Level6.sks */; };
+		BFC1630B1DFD04CA00E688AF /* Level7.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFC1630A1DFD04CA00E688AF /* Level7.sks */; };
 		BFD857C31DFADD2900C88B02 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD857C21DFADD2900C88B02 /* Scene.swift */; };
 		BFDCE8AA1DFB01CB00931672 /* Level1.sks in Resources */ = {isa = PBXBuildFile; fileRef = BFDCE8A91DFB01CB00931672 /* Level1.sks */; };
 		BFDF099F1DE80C90004226DB /* Shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDF099E1DE80C90004226DB /* Shape.swift */; };
@@ -48,9 +57,9 @@
 /* Begin PBXFileReference section */
 		69112EA31DEB26280081246A /* GameOverScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameOverScene.sks; sourceTree = "<group>"; };
 		69112EA41DEB26280081246A /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
-		693514A71DFBB23200155368 /* Level6.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level6.swift; sourceTree = "<group>"; };
 		6992493D1DF02FA100178B99 /* GameOver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOver.swift; sourceTree = "<group>"; };
 		69C90C5D1DFB526F0036ADEE /* Level4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level4.swift; sourceTree = "<group>"; };
+		BF1218391DFC905E00685F05 /* ping6.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ping6.wav; sourceTree = "<group>"; };
 		BF17870E1DE4057B00BF12CE /* Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
 		BF1787101DE4059000BF12CE /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		BF1787121DE4071100BF12CE /* PlayerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerController.swift; sourceTree = "<group>"; };
@@ -61,6 +70,9 @@
 		BF2A98581DE9FB0C00BC60B2 /* Triangle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Triangle@3x.png"; sourceTree = "<group>"; };
 		BF2A985C1DEA872500BC60B2 /* ExplosionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplosionController.swift; sourceTree = "<group>"; };
 		BF2A985E1DEA9AB100BC60B2 /* earthquake.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = earthquake.wav; sourceTree = "<group>"; };
+		BF5590E31DFBE562001DC42D /* Level7.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level7.swift; sourceTree = "<group>"; };
+		BF5590E51DFBEDC5001DC42D /* SevenColorsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SevenColorsController.swift; sourceTree = "<group>"; };
+		BF5590E71DFBF574001DC42D /* ProtectTriangleController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtectTriangleController.swift; sourceTree = "<group>"; };
 		BF7EE0971DFB499700D217C9 /* Level3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level3.swift; sourceTree = "<group>"; };
 		BF7EE09A1DFB5BBC00D217C9 /* ping1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ping1.wav; sourceTree = "<group>"; };
 		BF7EE09C1DFB5C0300D217C9 /* ultraflow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ultraflow.wav; sourceTree = "<group>"; };
@@ -69,6 +81,12 @@
 		BFB1F3581DE49C8600EEA0E1 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BFB1F35A1DE49FA000EEA0E1 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		BFB1F35C1DE4A5D200EEA0E1 /* EnemyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyController.swift; sourceTree = "<group>"; };
+		BFC163001DFD049900E688AF /* Level2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level2.sks; sourceTree = "<group>"; };
+		BFC163021DFD04A100E688AF /* Level3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level3.sks; sourceTree = "<group>"; };
+		BFC163041DFD04B000E688AF /* Level4.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level4.sks; sourceTree = "<group>"; };
+		BFC163061DFD04B800E688AF /* Level5.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level5.sks; sourceTree = "<group>"; };
+		BFC163081DFD04C200E688AF /* Level6.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level6.sks; sourceTree = "<group>"; };
+		BFC1630A1DFD04CA00E688AF /* Level7.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level7.sks; sourceTree = "<group>"; };
 		BFD857C21DFADD2900C88B02 /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		BFDCE8A91DFB01CB00931672 /* Level1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level1.sks; sourceTree = "<group>"; };
 		BFDF099E1DE80C90004226DB /* Shape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shape.swift; sourceTree = "<group>"; };
@@ -102,6 +120,7 @@
 			children = (
 				BF7EE09C1DFB5C0300D217C9 /* ultraflow.wav */,
 				BF7EE09A1DFB5BBC00D217C9 /* ping1.wav */,
+				BF1218391DFC905E00685F05 /* ping6.wav */,
 			);
 			name = Sounds;
 			sourceTree = "<group>";
@@ -112,10 +131,16 @@
 				BFDF1FD71DF9A46F004BC259 /* Level1.swift */,
 				BFDCE8A91DFB01CB00931672 /* Level1.sks */,
 				BFE6BB0D1DE3F74E00E362C5 /* Level2.swift */,
+				BFC163001DFD049900E688AF /* Level2.sks */,
 				BF7EE0971DFB499700D217C9 /* Level3.swift */,
+				BFC163021DFD04A100E688AF /* Level3.sks */,
 				69C90C5D1DFB526F0036ADEE /* Level4.swift */,
+				BFC163041DFD04B000E688AF /* Level4.sks */,
 				BF7EE0A01DFBC00600D217C9 /* Level5.swift */,
-				693514A71DFBB23200155368 /* Level6.swift */,
+				BFC163061DFD04B800E688AF /* Level5.sks */,
+				BFC163081DFD04C200E688AF /* Level6.sks */,
+				BF5590E31DFBE562001DC42D /* Level7.swift */,
+				BFC1630A1DFD04CA00E688AF /* Level7.sks */,
 				BFDF1FD91DF9A4C1004BC259 /* Menu.swift */,
 			);
 			name = Level;
@@ -154,6 +179,8 @@
 				BF17870E1DE4057B00BF12CE /* Controller.swift */,
 				BF1787121DE4071100BF12CE /* PlayerController.swift */,
 				BF1787101DE4059000BF12CE /* View.swift */,
+				BF5590E71DFBF574001DC42D /* ProtectTriangleController.swift */,
+				BF5590E51DFBEDC5001DC42D /* SevenColorsController.swift */,
 				BF7EE0A21DFBC26F00D217C9 /* WallController.swift */,
 				BFB1F35C1DE4A5D200EEA0E1 /* EnemyController.swift */,
 				BF2A985C1DEA872500BC60B2 /* ExplosionController.swift */,
@@ -234,13 +261,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF2A985F1DEA9AB100BC60B2 /* earthquake.wav in Resources */,
+				BF12183A1DFC905E00685F05 /* ping6.wav in Resources */,
 				BFE6BB131DE3F74E00E362C5 /* Main.storyboard in Resources */,
 				BF2A98591DE9FB0C00BC60B2 /* Triangle.png in Resources */,
+				BFC1630B1DFD04CA00E688AF /* Level7.sks in Resources */,
+				BFC163071DFD04B800E688AF /* Level5.sks in Resources */,
+				BFC163031DFD04A100E688AF /* Level3.sks in Resources */,
+				BFC163091DFD04C200E688AF /* Level6.sks in Resources */,
+				BFC163011DFD049900E688AF /* Level2.sks in Resources */,
 				BFE6BB151DE3F74E00E362C5 /* Assets.xcassets in Resources */,
 				BF2A985A1DE9FB0C00BC60B2 /* Triangle@2x.png in Resources */,
 				BF2A984B1DE9F81A00BC60B2 /* shatter.sks in Resources */,
 				BFE6BB181DE3F74E00E362C5 /* LaunchScreen.storyboard in Resources */,
 				BFE6BB0C1DE3F74E00E362C5 /* Actions.sks in Resources */,
+				BFC163051DFD04B000E688AF /* Level4.sks in Resources */,
 				BF7EE09D1DFB5C0300D217C9 /* ultraflow.wav in Resources */,
 				BF7EE09B1DFB5BBC00D217C9 /* ping1.wav in Resources */,
 				69112EA51DEB26280081246A /* GameOverScene.sks in Resources */,
@@ -258,11 +292,13 @@
 			files = (
 				BFDF1FD81DF9A46F004BC259 /* Level1.swift in Sources */,
 				BFE6BB0E1DE3F74E00E362C5 /* Level2.swift in Sources */,
+				BF5590E61DFBEDC5001DC42D /* SevenColorsController.swift in Sources */,
 				BFE6BB101DE3F74E00E362C5 /* GameViewController.swift in Sources */,
 				69112EA61DEB26280081246A /* GameOverScene.swift in Sources */,
+				BF5590E81DFBF574001DC42D /* ProtectTriangleController.swift in Sources */,
 				6992493E1DF02FA100178B99 /* GameOver.swift in Sources */,
 				BF1787131DE4071100BF12CE /* PlayerController.swift in Sources */,
-				693514A81DFBB23200155368 /* Level6.swift in Sources */,
+				BF5590E41DFBE562001DC42D /* Level7.swift in Sources */,
 				BF2A985D1DEA872500BC60B2 /* ExplosionController.swift in Sources */,
 				BF1787111DE4059000BF12CE /* View.swift in Sources */,
 				BFD857C31DFADD2900C88B02 /* Scene.swift in Sources */,
