@@ -15,12 +15,8 @@ struct BitMask {
     static let WALL = UInt32(1 << 4)
     static let WALL_FOR_PLAYER = UInt32(1 << 5)
     static let ANOTHER_WALL = UInt32(1 << 7)
-<<<<<<< HEAD
     static let SEVEN_COLORS = UInt32(1 << 9)
     static let PROTECT_TRIANGLE = UInt32(1 << 10)
-=======
-    static let ENEMY_MUTILLIVES = UInt32(1 << 8)
->>>>>>> 4eb24d87303b366be77dbf10c21b2c948b7ca810
 }
 
 struct Speed {
