@@ -14,7 +14,7 @@ class Level7: Scene, SKPhysicsContactDelegate {
     
     let playerController = PlayerController()
     var cameraNode: SKCameraNode!
-    var arrayPolygonEnemy: [() -> ()] = []
+    var arrayHexagonEnemy: [() -> ()] = []
     var addEnemyTimer: Timer!
     var addChangeColor: Timer!
     var addDoraemonBagColor: Timer!
@@ -50,6 +50,7 @@ class Level7: Scene, SKPhysicsContactDelegate {
         addGestureRecognizer(to: view)
         addWall()
         addCamera()
+<<<<<<< HEAD:testPlatformer/Level7.swift
         addNextButton()
         configPlayer()
         backGroundMusic()
@@ -72,6 +73,33 @@ class Level7: Scene, SKPhysicsContactDelegate {
         triangle.view.physicsBody?.velocity = CGVector(dx: 60, dy: 0)
     }
     
+=======
+        arrayHexagonEnemy.append(addEnemyTop)
+        arrayHexagonEnemy.append(addEnemyLeft)
+        arrayHexagonEnemy.append(addEnemyRight)
+        addNextButton()
+        configPlayer()
+        backGroundMusic()
+        
+        addEnemyTimer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(addEnemy), userInfo: nil, repeats: true)
+        
+        addChangeColor = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(spawnTriangle), userInfo: nil, repeats: true)
+        
+//        addDoraemonBagColor = Timer.scheduledTimer(timeInterval: 7, target: self, selector: #selector(spawnDoraemonBag), userInfo: nil, repeats: true)
+        
+        //        let pauseMenu = SKSpriteNode(color: UIColor.black, size: self.frame.size)
+        //        pauseMenu.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
+        //        pauseMenu.alpha = 0.4
+        //        pauseMenu.zPosition = 5
+        //        addChild(pauseMenu)\
+        //fucktest()
+    }
+    
+//    func fucktest()  {
+//        let dusa = multiLivesEnemy(shape: Shape.getHexagonPath(), color: UIColor.randColor())
+//        dusa.config(position: CGPoint(x: 500, y:300) , parent:self , shootAction: nil, moveAction: nil)
+//    }
+>>>>>>> 4eb24d87303b366be77dbf10c21b2c948b7ca810:testPlatformer/Level6.swift
     func backGroundMusic()  {
         let url = Bundle.main.url(forResource: "ultraflow", withExtension: "wav")!
         
@@ -104,6 +132,60 @@ class Level7: Scene, SKPhysicsContactDelegate {
         }
     }
     
+<<<<<<< HEAD:testPlatformer/Level7.swift
+=======
+    func addEnemy() {
+        arrayHexagonEnemy = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: arrayHexagonEnemy) as! [() -> ()]
+        arrayHexagonEnemy[0]()
+    }
+    
+    lazy var addEnemyTop : () -> () = { [unowned self] in
+        let PolygonEnemyController = multiLivesEnemy(shape: Shape.getHexagonPath(), color: UIColor.randColor())
+        
+        let randPosX = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.width.convertToInt / 5, highestValue: self.size.width.convertToInt * 9 / 10)
+        PolygonEnemyController.config(position: CGPoint(x: randPosX.nextInt(), y: self.size.height.convertToInt), parent: self, shootAction: nil, moveAction: nil)
+        PolygonEnemyController.view.physicsBody?.velocity = CGVector.goDown(velocity: Speed.CHANGECOLOR)
+    }
+    
+    lazy var addEnemyLeft : () -> () = { [unowned self] in
+        let PolygonEnemyController = multiLivesEnemy(shape: Shape.getHexagonPath(), color: UIColor.randColor())
+        
+        let randPosY = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.height.convertToInt / 5, highestValue: self.size.height.convertToInt * 9 / 10)
+        PolygonEnemyController.config(position: CGPoint(x: 0, y: randPosY.nextInt()), parent: self, shootAction: nil, moveAction: nil)
+        PolygonEnemyController.view.physicsBody?.velocity = CGVector.goRight(velocity: Speed.CHANGECOLOR)
+    }
+    
+    lazy var addEnemyRight : () -> () = { [unowned self] in
+        let PolygonEnemyController = multiLivesEnemy(shape: Shape.getHexagonPath(), color: UIColor.randColor())
+        
+        let randPosY = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.height.convertToInt / 5, highestValue: self.size.height.convertToInt * 9 / 10)
+        PolygonEnemyController.config(position: CGPoint(x: self.size.width.convertToInt, y: randPosY.nextInt()), parent: self, shootAction: nil, moveAction: nil)
+        PolygonEnemyController.view.physicsBody?.velocity = CGVector.goLeft(velocity: Speed.CHANGECOLOR)
+    }
+    
+    
+    
+    func spawnTriangle() {
+        
+        let randPosX = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.width.convertToInt / 5, highestValue: self.size.width.convertToInt * 9 / 10)
+        let randPosY = GKRandomDistribution(randomSource: GKARC4RandomSource(), lowestValue: self.size.height.convertToInt / 5, highestValue: self.size.height.convertToInt * 9 / 10)
+        
+        let trianglePosition = CGPoint(x: randPosX.nextInt(), y: randPosY.nextInt())
+        
+        let triangleController = ChangeColorController(color: UIColor.randColor())
+        triangleController.config(position: trianglePosition, parent: self, shootAction: nil, moveAction: nil)
+        //            triangleController.selfDestroy()
+        let destroy = SKAction.run {
+            triangleController.view.removeFromParent()
+        }
+        
+        triangleController.view.run(.sequence([.wait(forDuration: 3.2), destroy]))
+        
+        //            enemyController.activateAutoChangeColor()
+        
+    }
+    
+>>>>>>> 4eb24d87303b366be77dbf10c21b2c948b7ca810:testPlatformer/Level6.swift
     override func update(_ currentTime: TimeInterval) {
         
     }
@@ -140,7 +222,7 @@ class Level7: Scene, SKPhysicsContactDelegate {
         wall.position = CGPoint.zero
         wall.physicsBody = SKPhysicsBody(edgeLoopFrom: wall.frame)
         wall.physicsBody?.categoryBitMask = BitMask.WALL
-        wall.physicsBody?.contactTestBitMask = BitMask.PLAYER | BitMask.ENEMY | BitMask.CHANGE_COLOR
+        wall.physicsBody?.contactTestBitMask = BitMask.PLAYER | BitMask.ENEMY | BitMask.CHANGE_COLOR | BitMask.ENEMY_MUTILLIVES
         wall.name = "wall"
         wall.handleContact = { otherView in
             otherView.removeFromParent()
@@ -174,7 +256,11 @@ class Level7: Scene, SKPhysicsContactDelegate {
     }
     
     func replay() {
+<<<<<<< HEAD:testPlatformer/Level7.swift
 
+=======
+        //self.addEnemyTimer.invalidate()
+>>>>>>> 4eb24d87303b366be77dbf10c21b2c948b7ca810:testPlatformer/Level6.swift
         //        self.addChangeColor.invalidate()
         // Access UserDefaults
         //        let defaults = UserDefaults.standard
@@ -249,7 +335,11 @@ class Level7: Scene, SKPhysicsContactDelegate {
             guard nameOfTappedNode != nil else {return}
             
             if nameOfTappedNode == "next" {
+<<<<<<< HEAD:testPlatformer/Level7.swift
                 let newGameScene = Level7(size: self.frame.size)
+=======
+                let newGameScene = Level6(size: self.frame.size)
+>>>>>>> 4eb24d87303b366be77dbf10c21b2c948b7ca810:testPlatformer/Level6.swift
                 newGameScene.scaleMode = .aspectFill
                 self.view!.presentScene(newGameScene)
             }

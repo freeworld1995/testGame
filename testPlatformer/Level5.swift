@@ -72,7 +72,7 @@ class Level5: Scene, SKPhysicsContactDelegate {
         
         self.run(.repeatForever(addChangeColorSequence))
         
-//
+//        
 //        addEnemyTimer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(addEnemy), userInfo: nil, repeats: true)
         
 //        addChangeColor = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(spawnTriangle), userInfo: nil, repeats: true)
@@ -167,11 +167,11 @@ class Level5: Scene, SKPhysicsContactDelegate {
         let doraemonBagController = WallController(color: UIColor.randColor())
         doraemonBagController.config(position: doraemonBagPosition, parent: self, shootAction: nil, moveAction: nil)
         //            triangleController.selfDestroy()
-        let destroy = SKAction.run {
-            doraemonBagController.view.removeFromParent()
-        }
-        
-        doraemonBagController.view.run(.sequence([.wait(forDuration: 3.2), destroy]))
+//        let destroy = SKAction.run {
+//            doraemonBagController.view.removeFromParent()
+//        }
+//        
+//        doraemonBagController.view.run(.sequence([.wait(forDuration: 3.2), destroy]))
 //        
         //            enemyController.activateAutoChangeColor()
         
